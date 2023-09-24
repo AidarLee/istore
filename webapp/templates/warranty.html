@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+      <li><a href="{% url 'home' %}"><img src="{% static 'img/home.svg' %}" alt=""></a></li>
+      <li><img src="{% static 'img/left-bread.svg' %}" alt=""></li>
+      <li class="active">Гарантия</li>
+    </ul>
+{% endblock breadcrumb %}
+{% block content %}
+    <div class="wrapper">
+        <section class="about-us-first">
+            <div class="h-100 container d-flex flex-wrap">
+                <div class="text-center w-100 my-5">
+                    <h3 class="sf-sem main-title mb-5" data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="10" data-aos-offset="0" style="line-height: 100%;">
+                        {{warranty.title|safe}}</h3>
+                </div>
+            </div>
+        </section>
+        <section class="about-us-second">
+            <div class="h-100 pb-5">
+                {{ warranty.description|safe }}
+            </div>
+        </section>
+
+    </div>
+{% endblock %}

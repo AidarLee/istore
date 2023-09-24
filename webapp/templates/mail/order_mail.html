@@ -1,0 +1,248 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <h1 style="color: #1D1D1F;"> Заказ с istore.kg </h1>
+    <div style="max-width: 600px;">
+        <div style="display: flex; width: 100%;">
+            <div style="width: 50%;">
+                <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Имя:</p>
+            </div>
+            <div style="width: 50%;">
+                <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{name}}</p>
+            </div>
+        </div>
+        <br>
+        <div style="display: flex; width: 100%;">
+            <div style="width: 50%;">
+                <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Контактный номер:</p>
+            </div>
+            <div style="width: 50%;">
+                <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{phone}}</p>
+            </div>
+        </div>
+        <br>
+        <div style="display: flex; width: 100%;">
+            <div style="width: 50%;">
+                <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Способ доставки:</p>
+            </div>
+            <div style="width: 50%;">
+                <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{delivery}}</p>
+            </div>
+        </div>
+        <br>
+        <div style="display: flex; width: 100%;">
+            <div style="width: 50%;">
+                <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Страна:</p>
+            </div>
+            <div style="width: 50%;">
+                <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{country}}</p>
+            </div>
+        </div>
+        <br>
+        <div style="display: flex; width: 100%;">
+            <div style="width: 50%;">
+                <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Адрес:</p>
+            </div>
+            <div style="width: 50%;">
+                <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{address}}</p>
+            </div>
+        </div>
+        <br>
+        <div style="display: flex; width: 100%;">
+            <div style="width: 50%;">
+                <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Способ оплаты:</p>
+            </div>
+            <div style="width: 50%;">
+                <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{payment_option}}</p>
+            </div>
+        </div>
+        <br>
+        <div style="display: flex; width: 100%;">
+            <div style="width: 50%;">
+                <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Название промокода:</p>
+            </div>
+            <div style="width: 50%;">
+                <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{promo_name}}</p>
+            </div>
+        </div>
+        <br>
+        <div style="display: flex; width: 100%;">
+            <div style="width: 50%;">
+                <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Скидка по промокоду:</p>
+            </div>
+            <div style="width: 50%;">
+                <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{promo}}</p>
+            </div>
+        </div>
+        <br>
+        <div style="display: flex; width: 100%;">
+            <div style="width: 50%;">
+                <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Оплачено:</p>
+            </div>
+            <div style="width: 50%;">
+                <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{payment}}</p>
+            </div>
+        </div>
+        <br>
+        <div style="display: flex; width: 100%;">
+            <div style="width: 50%;">
+                <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Дата:</p>
+            </div>
+            <div style="width: 50%;">
+                <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{created}}</p>
+            </div>
+        </div>
+        <br>
+        <div style="display: flex; width: 100%;">
+            <div style="width: 50%;">
+                <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Комментарий:</p>
+            </div>
+            <div style="width: 50%;">
+                <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{comment}}</p>
+            </div>
+        </div>
+    </div>
+    {% for product in products%}
+        <h1 style="color: #1D1D1F;">Устройство: {{product.product}} </h1>
+        <div style="max-width: 600px;">
+            <div style="display: flex;">
+                <div style="width: 50%;">
+                    <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Цвет:</p>
+                </div>
+                <div style="width: 50%;">
+                    <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{product.color}}</p>
+                </div>
+            </div>
+            <br>
+            <div style="display: flex;">
+                <div style="width: 50%;">
+                    <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Ёмкость:</p>
+                </div>
+                <div style="width: 50%;">
+                    <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{product.capacity}}</p>
+                </div>
+            </div>
+            <br>
+            <div style="display: flex;">
+                <div style="width: 50%;">
+                    <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Колличество:</p>
+                </div>
+                <div style="width: 50%;">
+                    <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{product.quantity}}</p>
+                </div>
+            </div>
+            <br>
+            <div style="display: flex;">
+                <div style="width: 50%;">
+                    <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Цена:</p>
+                </div>
+                <div style="width: 50%;">
+                    <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{product.price}}</p>
+                </div>
+            </div>
+            <br>
+            <div style="display: flex;">
+                <div style="width: 50%;">
+                    <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Цена в сомах:</p>
+                </div>
+                <div style="width: 50%;">
+                    <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{product.converted}}</p>
+                </div>
+            </div>
+            <br>
+            {% if product.comment %}
+                <div style="display: flex;">
+                    <div style="width: 50%;">
+                        <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Комментарий:</p>
+                    </div>
+                    <div style="width: 50%;">
+                        <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{product.comment}}</p>
+                    </div>
+                </div>
+                <br>
+            {% endif %}
+            {% if product.keyboard %}
+                <div style="display: flex;">
+                    <div style="width: 50%;">
+                        <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Раскладка клавиатуры:</p>
+                    </div>
+                    <div style="width: 50%;">
+                        <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{product.keyboard}}</p>
+                    </div>
+                </div>
+                <br>
+            {% endif %}
+            {% if product.caseSize %}
+                <div style="display: flex;">
+                    <div style="width: 50%;">
+                        <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Размер корпуса:</p>
+                    </div>
+                    <div style="width: 50%;">
+                        <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{product.caseSize}}</p>
+                    </div>
+                </div>
+                <br>
+            {% endif %}
+            {% if product.connectivity %}
+                <div style="display: flex;">
+                    <div style="width: 50%;">
+                        <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Возможности подключения:</p>
+                    </div>
+                    <div style="width: 50%;">
+                        <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{product.connectivity}}</p>
+                    </div>
+                </div>
+                <br>
+            {% endif %}
+            {% if product.ram %}
+                <div style="display: flex;">
+                    <div style="width: 50%;">
+                        <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Оперативная память:</p>
+                    </div>
+                    <div style="width: 50%;">
+                        <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{product.ram}}</p>
+                    </div>
+                </div>
+                <br>
+            {% endif %}
+            {% if product.cpu %}
+                <div style="display: flex;">
+                    <div style="width: 50%;">
+                        <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Процессор:</p>
+                    </div>
+                    <div style="width: 50%;">
+                        <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{product.cpu}}</p>
+                    </div>
+                </div>
+                <br>
+            {% endif %}
+            {% if product.edition %}
+                <div style="display: flex;">
+                    <div style="width: 50%;">
+                        <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Edition:</p>
+                    </div>
+                    <div style="width: 50%;">
+                        <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{product.edition}}</p>
+                    </div>
+                </div>
+                <br>
+            {% endif %}
+            {% if product.pattern %}
+                <div style="display: flex;">
+                    <div style="width: 50%;">
+                        <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Модель:</p>
+                    </div>
+                    <div style="width: 50%;">
+                        <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{product.pattern}}</p>
+                    </div>
+                </div>
+                <br>
+            {% endif %}
+        </div>
+    {% endfor %}
+</body>
+</html>

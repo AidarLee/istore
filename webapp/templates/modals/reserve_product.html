@@ -1,0 +1,63 @@
+{% load static %}
+<div class="modal fade" id="reserveProduct" tabindex="-1" role="dialog" aria-labelledby="reserveProduct"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body d-flex flex-wrap justify-content-center pb-5">
+                <div class="w-100">
+                    <button type="button" class="close ml-auto" data-dismiss="modal" aria-label="Close">
+                        <img src="{% static 'img/close.svg' %}" alt="">
+                    </button>
+                </div>
+                <form action="{% url 'make_reserve' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{ product.id }}">
+                    <input type="hidden" class="product_specification" name="specification" value="">
+                    <input type="hidden" class="modules" name="modules" value="">
+                    <div class="w-100 text-center">
+                        <h5 class="modal-title sf-medium notify-title">Забронировать товар</h5>
+                        <div class="d-flex flex-wrap mt-4">
+                            <div class="col-lg-5 col-12">
+                                <img class="product-img" src="" alt="">
+                            </div>
+                            <div class="col-lg-7 col-12">
+                                <p class="sf-reg product-header text-left">
+                                    Устройство
+                                </p>
+                                <p class="sf-medium product-body mt-2 text-left product-title">
+                                    {{ product }}
+                                </p>
+                                <p class="sf-reg product-header mt-4 text-left">
+                                    Сумма залога
+                                </p>
+                                <p class="sf-medium product-body mt-2 text-left">
+                                    {{settings.reserve_price}} сом
+                                </p>
+                                <p class="sf-reg product-header mt-4 text-left">
+                                    Инормация о брони
+                                </p>
+                                <p class="sf-reg product-body-desc mt-2 text-left">
+                                    {{settings.reserve_text|default:''}} 
+                                    <span style="color:red;">Cумма залога возврату не подлежит</span>
+                                </p>
+                                <input type="text" class="client_name form-control mt-2" name="client_name"  required value="{{ user.name|default:'' }}" placeholder="ФИО">
+                                <input type="number" class="client_phone form-control mt-2" name="client_phone"  required value="{{ user.phone|default:'' }}" placeholder="Номер телефона">
+                                <div class="form-group mb-2 mt-3 d-flex justify-content-start align-items-center">
+                                    <input type="checkbox" class="mr-2 checkbox-custom c-point" id="agreement" required>
+                                        <label class="mb-0 login-agree" style="font-size: 11px;" for="agreement">
+                                            <a class="d-flex align-items-center h-100" href="{% url 'agreement' %}"  target="_blank">
+                                                Я принимаю условия пользовательского соглашения
+                                            </a>
+                                        </label>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-reserve w-100 waves-effect waves-light " disabled>
+                                    Внести залог
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

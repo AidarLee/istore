@@ -1,0 +1,401 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% load static %}
+    <div class="section bouncy d-none">
+      <div class="loading-container">
+        <div class="loading">
+          <div class="dot left three"></div>
+          <div class="dot left two"></div>
+          <div class="dot left one"></div>
+            <span class="icon icon-logo">Загрузка</span>
+          <div class="dot right one"></div>
+          <div class="dot right two"></div>
+          <div class="dot right three"></div>
+        </div>
+      </div>
+    </div>
+    <div class="wrapper p-3">
+        <section class="checkout-first">
+            <div class="h-100 container d-flex flex-wrap">
+                <div class="col-12 my-4 px-0">
+                    <h3 class="sf-sem main-title">Оформление заказа</h3>
+                </div>
+            </div>
+        </section>
+        {% if products_in_basket %}
+            <section class="checkout-first d-none">
+        {% else %}
+            <section class="checkout-first">
+        {% endif %}
+        <div class="h-100 container d-flex flex-wrap justify-content-center empty">
+            <div class="col-lg-2 col-sm-5 col-7 mt-5">
+                <img src="{% static '/img/empty.svg' %}" alt="" class="response-img">
+            </div>
+            <div class="text-center w-100">
+
+                <h3 class="sf-sem main-title">Ваша корзина пуста</h3>
+                <h4 class="sf-light main-little-description">
+                    Самое время добавить в нее что-нибудь
+                </h4>
+            </div>
+            <div class="col-lg-4 col-sm-5 col-7  mb-5">
+                <a class="btn btn-primary basket-btn w-100 waves-effect waves-light">
+                    Перейти в каталог
+                </a>
+            </div>
+        </div>
+        </section>
+        {% if products_in_basket %}
+            <section class="checkout-second">
+        {% else %}
+            <section class="checkout-second d-none">
+        {% endif %}
+        <div class="h-100 container d-flex flex-wrap justify-content-center mb-4">
+            <div class="col-xl-9 col-12 pl-0 pr-5">
+                {% if not user.is_authenticated %}
+                    <p class="sf-reg block-title mb-3">Ваши контактные данные</p>
+                    <div class="auth">
+                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link link bg-none active" id="new-user-tab" data-toggle="pill"
+                                   href="#new-user"
+                                   role="tab" aria-controls="new-user" aria-selected="true">Я новый покупатель</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link link bg-none" id="auth-user-tab" data-toggle="pill" href="#auth-user"
+                                   role="tab" aria-controls="auth-user" aria-selected="false">Авторизоваться</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="new-user" role="tabpanel"
+                                 aria-labelledby="nav-home-tab">
+                                <div class="d-flex flex-wrap">
+                                    <div class="col-lg-6 col-12 px-1">
+                                        <input type="text" class="form-control register-second-name" placeholder="Фамилия">
+                                    </div>
+                                    <div class="col-lg-6 col-12 px-1">
+                                        <input type="text" class="form-control register-name" placeholder="Имя">
+                                    </div>
+                                    <div class="col-lg-6 col-12 px-1">
+                                        <input type="number" class="form-control register-phone"
+                                               placeholder="Мобильный телефон: 996555555555">
+                                    </div>
+                                    <div class="col-lg-6 col-12 px-1">
+                                        <input type="email" class="form-control register-email" placeholder="Email">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="auth-user" role="tabpanel"
+                                 aria-labelledby="nav-profile-tab">
+                                <div class="d-flex flex-wrap">
+                                    <div class="col-lg-6 col-12 px-1">
+                                        <input type="text" class="form-control auth-phone"
+                                               placeholder="Мобильный телефон">
+                                        <div class="info d-flex align-items-center mt-2">
+                                            <svg width="12" height="12" viewBox="0 0 12 12" fill="#828282" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M6 11.5C2.95 11.5 0.5 9.05 0.5 6C0.5 2.95 2.95 0.5 6 0.5C9.05 0.5 11.5 2.95 11.5 6C11.5 9.05 9.05 11.5 6 11.5ZM6 1.5C3.5 1.5 1.5 3.5 1.5 6C1.5 8.5 3.5 10.5 6 10.5C8.5 10.5 10.5 8.5 10.5 6C10.5 3.5 8.5 1.5 6 1.5Z"
+                                                    fill="#828282" />
+                                                <path d="M6 6.5C5.7 6.5 5.5 6.3 5.5 6V4C5.5 3.7 5.7 3.5 6 3.5C6.3 3.5 6.5 3.7 6.5 4V6C6.5 6.3 6.3 6.5 6 6.5Z"
+                                                    fill="#828282" />
+                                                <path
+                                                    d="M6 8.5C5.85 8.5 5.75 8.45 5.65 8.35C5.55 8.25 5.5 8.15 5.5 8C5.5 7.95 5.5 7.85 5.55 7.8C5.6 7.75 5.6 7.7 5.65 7.65C5.8 7.5 6 7.45 6.2 7.55C6.25 7.55 6.25 7.55 6.3 7.6C6.3 7.6 6.35 7.65 6.4 7.65C6.45 7.7 6.5 7.75 6.5 7.8C6.5 7.85 6.5 7.95 6.5 8C6.5 8.05 6.5 8.15 6.45 8.2C6.4 8.25 6.4 8.3 6.35 8.35C6.25 8.45 6.15 8.5 6 8.5Z"
+                                                    fill="#828282" />
+                                            </svg>
+                                            <p class="info-text ml-2 desc" style="color:black;">Пример 996555555555</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-12 px-1">
+                                        <input type="password" class="form-control auth-password"
+                                               placeholder="Пароль">
+                                    </div>
+                                    <div class="col-12 px-1">
+                                        <a class="nav-link link bg-none text-right pr-0 pt-2 c-point" data-toggle="modal" data-target="#forgetPassword">Забыли пароль?</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                <p class="sf-reg block-title my-3">Ваш заказ</p>
+                <div class="products-main-title bb-grey d-md-flex d-none flex-wrap justify-content-center w-100 mb-2">
+                    <div class="col-5 pl-0">
+                        <p class="sf-reg">Продукт</p>
+                    </div>
+                    <div class="col-2">
+                        <p class="sf-reg">Количество</p>
+                    </div>
+                    <div class="col-2">
+                        <p class="sf-reg">Цена</p>
+                    </div>
+                    <div class="col-3 pr-0">
+                        <p class="sf-reg">К оплате</p>
+                    </div>
+                </div>
+                {% for products in products_in_basket %}
+                    <div class="product-in-basket bb-grey d-flex flex-wrap w-100 my-lg-2 my-4 product-{{ products.id }}">
+                        <div class="col-md-5 col-12 pl-0 d-flex align-items-center flex-wrap">
+                            <div class="col-md-3 col-12 px-0 text-center">
+                                <img src="{{ products.get_product_image }}" alt="" class="product-img">
+                            </div>
+                            <div class="col-md-9 col-12 mt-md-0 mt-4">
+                                <p class="sf-reg of-2-ellipsis">{{ products.get_product_title }}</p>
+                                <button class="btn show-attribute position-relative collapsed" type="button" data-toggle="collapse" data-target="#attributes-{{products.id}}"
+                                    aria-expanded="false" aria-controls="attributes-{{products.id}}">
+                                    Показать сведения о продукте
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-4 mt-md-0 mt-2 d-md-flex d-block align-items-center">
+                            <p class="sf-reg d-md-none d-block title">Количество</p>
+                            <p class="sf-reg">{{ products.quantity }}</p>
+                        </div>
+                        <div class="col-md-2 col-4 mt-md-0 mt-2 d-flex flex-column justify-content-center">
+                            <p class="sf-reg d-md-none d-block title">Цена</p>
+                            <p class="sf-medium usd-price">{{ products.get_product_converted_price }} сом</p>
+                            <p class="sf-light rub-price w-100"> ${{ products.get_product_price }}</p>
+                        </div>
+                        <div class="col-md-3 col-4 mt-md-0 mt-2 d-flex align-items-center pr-0">
+                            <div>
+                                <p class="sf-reg d-md-none d-block title">К оплате</p>
+                                <p class="sf-medium usd-price">
+                                    {% widthratio products.get_product_converted_price 1 products.quantity %} сом
+                                </p>
+                                <p class="sf-light rub-price">
+                                    $ {% widthratio products.get_product_price 1 products.quantity %}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="collapse col-12 px-0" id="attributes-{{products.id}}">
+                            <div class="d-flex flex-wrap">
+                                {% if products.cpu %}
+                                    <div class="col-lg-3 col-12 py-3">
+                                        <h3 class="attribute-heading">Процессор</h3>
+                                        <p class="attribute-value mt-2">{{products.cpu}}</p>
+                                    </div>
+                                {% endif %}
+                                {% if products.capacity %}
+                                    <div class="col-lg-3 col-12 py-3">
+                                        <h3 class="attribute-heading">Память</h3>
+                                        <p class="attribute-value mt-2">{{products.capacity}}</p>
+                                    </div>
+                                {% endif %}
+                                {% if products.ram %}
+                                    <div class="col-lg-3 col-12 py-3">
+                                        <h3 class="attribute-heading">Оперативная память</h3>
+                                        <p class="attribute-value mt-2">{{products.ram}}</p>
+                                    </div>
+                                {% endif %}
+                                {% if products.keyboard %}
+                                    <div class="col-lg-3 col-12 py-3">
+                                        <h3 class="attribute-heading">Раскладка клавиатуры</h3>
+                                        <p class="attribute-value mt-2">{{products.keyboard}}</p>
+                                    </div>
+                                {% endif %}
+                                <div class="col-lg-6 col-12 py-3">
+                                    <h3 class="attribute-heading">
+                                        Дополнительные сведения
+                                    </h3>
+                                    <div class="d-flex flex-column  mt-2">
+                                        {% if products.color %}
+                                            <div class="d-flex">
+                                                <p class="attribute-value">- Цвет:</p>
+                                                <span class="attribute-value-min">
+                                                    {{products.color}}
+                                                </span>
+                                            </div>
+                                        {% endif %}
+                                        {% if products.edition %}
+                                            <div class="d-flex">
+                                                <p class="attribute-value">- Издание:</p>
+                                                <span class="attribute-value-min">
+                                                    {{products.edition}}
+                                                </span>
+                                            </div>
+                                        {% endif %}
+                                        {% if products.caseSize %}
+                                            <div class="d-flex">
+                                                <p class="attribute-value">- Размер корпуса:</p>
+                                                <span class="attribute-value-min">
+                                                    {{products.caseSize}}
+                                                </span>
+                                            </div>
+                                        {% endif %}
+                                        {% if products.connectivity %}
+                                            <div class="d-flex">
+                                                <p class="attribute-value">- Возможности подключения:</p>
+                                                <span class="attribute-value-min">
+                                                    {{products.connectivity}}
+                                                </span>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                <p class="sf-reg block-title my-3">Адрес доставки</p>
+                <div class="d-flex flex-wrap">
+                    <div class="col-sm-6 col-12 px-1">
+                        <label class="form-control d-flex align-items-center c-point" for="self">
+                            <input class="mr-1 delivery-option" type="radio" name="address" value="Самовывоз" id="self" data-id="1" checked>
+                            Самовывоз
+                        </label>
+                    </div>
+                    <div class="col-sm-6 col-12 px-1">
+                        <label class="form-control d-flex align-items-center c-point" for="courier">
+                            <input class="mr-1 delivery-option" type="radio" name="address" value="Курьерская доставка" id="courier" data-id="2">
+                            Курьерская доставка
+                        </label>
+                    </div>
+                    <div class="col-lg-4 col-12 pl-1 mt-3 pickup">
+                        <p class="sf-light gr-text">
+                            Вы можете забрать ваш заказ по адресу:
+                        </p>
+                        <p class="sf-reg address-text mt-2">
+                            ул. Манаса, 40 (пер ул. Киевская)
+                        </p>
+                        <p class="sf-light gr-text mt-2">
+                            Пн - Вс | 10:00 - 20:00
+                        </p>
+                    </div>
+                    <div class="col-lg-8 col-12 checkout-map mt-3 pickup">
+                        <a class="dg-widget-link"
+                           href="http://2gis.kg/bishkek/firm/70000001020196124/center/74.58800554275514,42.876247147981104/zoom/16?utm_medium=widget-source&utm_campaign=firmsonmap&utm_source=bigMap">Посмотреть
+                            на карте Бишкека</a>
+                        <div class="dg-widget-link"><a
+                                href="http://2gis.kg/bishkek/firm/70000001020196124/photos/70000001020196124/center/74.58800554275514,42.876247147981104/zoom/17?utm_medium=widget-source&utm_campaign=firmsonmap&utm_source=photos">Фотографии
+                            компании</a></div>
+                        <div class="dg-widget-link"><a
+                                href="http://2gis.kg/bishkek/center/74.588009,42.875669/zoom/16/routeTab/rsType/bus/to/74.588009,42.875669╎iStore, магазин?utm_medium=widget-source&utm_campaign=firmsonmap&utm_source=route">Найти
+                            проезд до iStore, магазин</a></div>
+                        <script charset="utf-8" src="https://widgets.2gis.com/js/DGWidgetLoader.js"></script>
+                        <script charset="utf-8">new DGWidgetLoader({
+                            "width": 304,
+                            "height": 200,
+                            "borderColor": "#a3a3a3",
+                            "pos": {"lat": 42.876247147981104, "lon": 74.58800554275514, "zoom": 15},
+                            "opt": {"city": "bishkek"},
+                            "org": [{"id": "70000001020196124"}]
+                        });</script>
+                        <noscript style="color:#c00;font-size:16px;font-weight:bold;">Виджет карты использует
+                            JavaScript.
+                            Включите его в настройках вашего браузера.
+                        </noscript>
+                    </div>
+                    <div class="col-lg-6 col-12 px-1 express-delivery d-none">
+                        <select id="countryIdCheckout" class="country form-control">
+                            <option value="" disabled>Выберите страну доставки</option>
+                            <option value="Кыргызстан" selected>Кыргызстан</option>
+                            <option value="Казахстан">Казахстан</option>
+                            <option value="Россия">Россия</option>
+                            <option value="Армения">Армения</option>
+                        </select>
+                    </div>   
+                    <div class="col-lg-6 col-12 px-1 express-delivery d-none">
+                        <input  type="text" class="address form-control" placeholder="Введите адрес доставки" value="{{ user.address|default:'' }}">
+                    </div>
+                    {% if user.id and not user.phone %}
+                        <div class="col-lg-6 col-12 px-1">
+                            <input type="text" class="form-control empty-phone" placeholder="Мобильный телефон: 996555555555" required="true">
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-xl-3 change-a col-12 d-flex flex-wrap px-0 mt-md-0 mt-3">
+                <div class="confirm-block h-auto">
+                    <p class="sf-light">
+                        Промокод
+                    </p>
+                    <input id="promoSearch"  type="text" class="promo form-control" placeholder="Введите сюда промокод">
+                    <p class="promo-code-area d-none" data-name="" data-percent="">
+
+                    </p>
+                    <input type="hidden" class="currency" value="{{ currency }}">
+                    <p class="block-title mt-4">
+                        Итого:
+                    </p>
+                    <div class="d-flex justify-content-between mt-3">
+                        <p class="attr">{{ products_in_basket|length }} товара на сумму </p>
+                        <p class="val">${{ final_price }}</p>
+                    </div>
+                    <!-- <div class="d-flex justify-content-between mt-2">
+                        <p class="attr">Стоимость доставки</p>
+                        <p class="val delivery-cost">Бесплатно</p>
+                    </div> -->
+                    <div class="d-flex justify-content-between mt-4">
+                        <p class="attr">К оплате</p>
+                        <div>
+                            <p class="val-big">
+                                <span class="checkout-converted-price" data-price="{{ final_converted_price }}">
+                                {{ final_converted_price }}
+                                </span> сом
+                            </p>
+                            <p class="val">
+                                 $
+                                <span class="checkout-price" data-price="{{ final_price }}">
+                                    {{ final_price }}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary confirm-btn mt-4  waves-effect waves-light mr-0">
+                        Подтвердить заказ
+                    </button>
+                    <div class="sf-light agree">Подтверждая заказ, я принимаю условия
+                        <a class="sf-light" href="{% url 'agreement' %}"  target="_blank">пользовательского соглашения</a>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-12 change-b px-0 d-flex flex-wrap">
+                <p class="sf-reg block-title my-3 w-100">Способ оплаты</p>
+                <div class="d-flex flex-wrap col-md-6 col-12 px-0">
+                    <div class="disabledPaymentClass col-md-6 col-12 px-1">
+                        <label class="form-control d-flex align-items-center c-point" for="cash">
+                            <input class="mr-1 payment-option" type="radio" name="payment" value="Наличными" id="cash" checked>
+                            Наличными
+                        </label>
+                    </div>
+                    <div class="increaseWidth col-md-6 col-12 px-1">
+                        <label class="form-control d-flex align-items-center c-point" for="bank_transfer">
+                            <input class="mr-1 payment-option" type="radio" name="payment" value="Банковский перевод" id="bank_transfer">
+                            Банковский перевод
+                        </label>
+                    </div>
+                    <div class="disabledPaymentClass col-md-6 col-12 px-1">
+                        <label class="form-control d-flex align-items-center c-point" for="payment_to_the_courier">
+                            <input class="mr-1 payment-option" type="radio" name="payment" value="Оплата курьеру на месте" id="payment_to_the_courier">
+                            Оплата курьеру на месте
+                        </label>
+                    </div>
+                </div>
+                <div class="d-flex flex-wrap col-md-6 col-12 px-0 ">
+                    <div class="disabledPaymentClass col-md-6 col-12 px-1">
+                        <label class="form-control d-flex align-items-center c-point" for="paybox">
+                            <input class="mr-1 payment-option" type="radio" name="payment" value="paybox" id="paybox">
+                            Оплата картой, электронными кошельками на сайте
+                        </label>
+                    </div>
+                    <div class="increaseWidth col-md-6 col-12 px-1">
+                        <label class="form-control d-flex align-items-center c-point" for="remittance">
+                            <input class="mr-1 payment-option" type="radio" name="payment" value="Денежный перевод" id="remittance">
+                            Денежный перевод
+                        </label>
+                    </div>
+                </div>
+                <p class="sf-reg block-title my-3 w-100">Комментраий к заказу</p>
+                <div class="col-12 px-1">
+                    <textarea class="form-control comment" name="" rows="3" placeholder="Ваше сообщение">
+                    </textarea>
+                </div>
+            </div>
+        </div>
+        </section>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script defer src="{% static 'js/checkout.js' %}?v={{ js }}"></script>
+{% endblock %}

@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load make_range %}
+{% load add_class %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+      <li><a href="{% url 'home' %}"><img src="{% static 'img/home.svg' %}" alt=""></a></li>
+      <li><img src="{% static 'img/left-bread.svg' %}" alt=""></li>
+      <li class="active">Покупка в кредит</li>
+    </ul>
+{% endblock breadcrumb %}
+
+{% block content %}
+
+<div class="wrapper">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <section class="loan-first">
+        <div class="h-100 container d-flex flex-wrap">
+            <div class="text-center w-100 mt-5">
+                <h3 class="sf-sem main-title">Покупка в кредит</h3>
+            </div>
+        </div>
+    </section>
+    <section class="loan-second">
+    <form action="{% url 'purchase_on_credit' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="container d-flex justify-content-center flex-wrap pt-5">
+            <div class="col-lg-5 pr-4 col-12">
+                <div class="loan-product">
+                    {% for product in products%}
+                    <div class="loan-result p-3">
+                        <div class="col-12">
+                            <p class="sf-reg loan-title">Устройство</p>
+                            <p class="sf-reg loan-body mt-2">{{ product.name }}</p>
+                        </div>
+                        <div class="d-flex flex-wrap justify-content-between">
+                            <div class="col-12 mt-4">
+                                <p class="sf-reg loan-title">Цена устройства</p>
+                                <p class="sf-reg loan-body mt-2">${{ product.price }}</p>
+                                <p class="sf-reg loan-title mt-2">{{ product.converted }} сом</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="loan-result p-3 d-flex flex-wrap">
+                        <div class="col-lg-6 col-12">
+                            <p class="sf-reg loan-title">Ежемесячно</p>
+                            <p class="sf-reg loan-body mt-3">
+                                {{per_month}} сом
+                            </p>
+                        </div>
+                        <div class="col-lg-6 col-12  mt-lg-0 mt-3">
+                            <p class="sf-reg loan-title">Итого</p>
+                            <p class="sf-reg loan-body pay-for-month mt-2">{{all_sum}} сом</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7 pl-4 col-12">
+                <p class="s-medium loan-header w-100">
+                    Заполнить заявку
+                </p>
+                <p class="sf-reg loan-title form-group required mt-1">Все поля обязательны к заполнению</p>
+
+                <div class="d-flex flex-wrap mt-3">
+                    <div class="col-lg-6 col-12 pl-0 px-mb-0 mt-2">
+                        <p class="sf-reg loan-title form-group required mb-2">Имя</p>
+                        {{ form.name }}
+                        {{ form.name.errors}}
+                    </div>
+                    <div class="col-lg-6 col-12 pr-0 px-mb-0 -2 mt-2">
+                        <p class="sf-reg loan-title form-group required mb-2">Фамилия</p>
+                        {{ form.second_name }}
+                        {{ form.second_name.errors }}
+                    </div>
+                    <div class="col-lg-6 col-12 pl-0 px-mb-0 mt-4">
+                        <p class="sf-reg loan-title form-group required mb-2">Номер телефона</p>
+                        {{ form.phone }}
+                        {{ form.phone.errors }}
+                    </div>
+                    <div class="col-lg-6 col-12 pr-0 px-mb-0 mt-4">
+                        <p class="sf-reg loan-title form-group mb-2">Email</p>
+                        {{ form.email }}
+                        {{ form.email.errors }}
+                    </div>
+                </div>
+                <p class="s-medium loan-header w-100 mt-4">
+                    Паспортные данные
+                </p>
+                <div class="d-flex flex-wrap mt-3">
+                    <div class="h-list passport-radio-btns d-flex flex-wrap align-items-end  w-100">
+                        {{ form.passport }}
+                    </div>
+                    <div class="col-lg-6 col-12 pl-0 px-mb-0 mt-4">
+                        <p class="sf-reg loan-title form-group required mb-2">Загрузить лицевую сторону паспорта</p>
+                        <div class="form-group">
+                          <label for="passport_front" class="btn btn-upload">
+                              {{ form.passport_front }}
+                              <img class="upload-img" src="{% static 'img/upload.svg' %}" alt="">
+                            <span class="js-fileName ml-2">
+                                Прикрепить файл
+                                
+                            </span>
+                            
+                          </label>
+                        </div>
+                        {{ form.passport_front.errors }}
+                    </div>
+                    <div class="col-lg-6 col-12 pr-0 px-mb-0 mt-4">
+                        <p class="sf-reg loan-title form-group required mb-2">Загрузить заднюю сторону паспорта</p>
+                        <div class="form-group">
+                          <label for="passport_back" class="btn btn-upload">
+                            {{ form.passport_back }}
+                              <img class="upload-img" src="{% static 'img/upload.svg' %}" alt="">
+                            <span class="js-fileName ml-2">
+                                Прикрепить файл
+                            
+                            </span>
+                          </label>
+                        </div>
+                        {{ form.passport_back.errors }}
+                    </div>
+                    <div class="col-12 px-0 mt-4 place-of-residence">
+                        <p class="sf-reg loan-title form-group mb-2">Загрузить справку с места жительства</p>
+                        <div class="form-group">
+                          <label for="place_of_residence" class="btn btn-upload">
+                                {{ form.place_of_residence }}
+                              <img class="upload-img" src="{% static 'img/upload.svg' %}" alt="">
+                            <span class="js-fileName ml-2">
+                                Прикрепить файл
+                            </span>
+                          </label>
+                        </div>
+                        {{ form.place_of_residence.errors }}
+                    </div>
+                </div>
+                <p class="s-medium loan-header w-100 mt-2 required">
+                    Данные о доходах
+                </p>
+                <div class="d-flex flex-wrap">
+                    <div class="col-lg-6 col-12 pl-0 px-mb-0 mt-3">
+                        {{ form.salary }}
+                        {{ form.salary.errors }}
+                    </div>
+                    <div class="col-lg-6 col-12  px-mb-0 pr-0 mt-3">
+                        <div class="form-group">
+                          <label for="salary_img" class="btn btn-upload">
+                            {{ form.salary_img }}
+                              <img class="upload-img" src="{% static 'img/upload.svg' %}" alt="">
+                            <span class="js-fileName ml-2">
+                                Прикрепить файл
+                            </span>
+                          </label>
+                        </div>
+                        {{ form.salary_img.errors }}
+                    </div>
+                </div>
+                <div class="form-group my-2">
+                    <label class="mb-0 login-agree" style="font-size: 11px;" for="agreement">
+                        <input type="checkbox" class="checkbox-custom c-point pr-5 pb-5" id="agreement">
+                        {{bank.agreement}}
+                    </label>
+                    <button type="submit" class="btn btn-primary mt-3 px-5 mb-4" disabled>
+                        Отправить заявку
+                    </button>
+                </div>
+                
+            </div>
+        </div>
+    </form>
+    </section>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,333 @@
+{% load static %}
+<nav class="nav-wrapper position-fixed w-100 need-fixed">
+    <div class="overlay-wrapper"></div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark need-full-height  w-100 first-nav px-lg-2 px-0">
+        <div class="container px-3">
+            <div class="mobile-menu-container d-lg-none d-flex align-items-center">
+                <button class="navbar-toggler border-0 p-0 nav-icon-opener" type="button" data-toggle="collapse" data-target="#navbar-main"
+                        aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation">
+                    <div id="nav-icon">
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+            <a class="navbar-brand d-lg-none d-block sf-sem mx-auto" href="{% url 'home' %}"><img class="lazyload" width="55px" height="20px" data-src="{% static '_image/logo_mobile.webp' %}" alt="" style="width:55px;"></a>
+            <li class="dropdown align-items-center d-lg-none d-flex">
+                <button class="nav-link sf-reg p-0 bg-none border-0 o-none mr-3" id="mobileSearch">
+                    <img class="lazyload" data-src="{% static 'img/white-search.svg' %}" alt="" width="25px" height="25px">
+                </button>
+                <button class="nav-link sf-reg p-0 bg-none border-0 o-none" id="mobileBasket">
+                    <img class="lazyload" data-src="{% static 'img/mobile-union.svg' %}" alt="" width="25px" height="25px">
+                    <div class="shop-round">{{ products_in_basket|length }}</div>
+                </button>
+            </li>
+            <div class="collapse navbar-collapse px-0" id="navbar-main">
+                <ul class="navbar-nav custom-nav justify-content-between mr-auto mobile-link-content">
+                    {% url 'home' as url %}
+                    <li class="nav-item {% if request.path == url %}active{% endif %}">
+                        <a class="nav-link sf-reg pl-0" href="{% url 'home' %}" data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="10" data-aos-offset="0">Главная</a>
+                    </li>
+                    {% url 'about_us' as url %}
+                    <li class="nav-item {% if request.path == url %}active{% endif %}">
+                        <a class="nav-link sf-reg" href="{% url 'about_us' %}" data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="10" data-aos-offset="0">О нас</a>
+                    </li>
+                    {% url 'catalog:index' as url %}
+                    <li class="nav-item {% if request.path == url %}active{% endif %}">
+                        <a class="nav-link sf-reg" href="{% url 'catalog:index' %}" data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="10" data-aos-offset="0">Продукция</a>
+                    </li>
+                    {% url 'catalog:products' as url %}
+                    <li class="nav-item {% if request.path == url %}active{% endif %}">
+                        <a class="nav-link sf-reg" href="{% url 'catalog:products' 'accessory' %}" data-aos="fade-zoom-in"
+                            data-aos-easing="ease-in-back" data-aos-delay="10" data-aos-offset="0">Аксессуары</a>
+                    </li>
+                    {% url 'warranty' as url %}
+                    <li class="nav-item {% if request.path == url %}active{% endif %}">
+                        <a class="nav-link sf-reg" href="{% url 'warranty' %}" data-aos="fade-zoom-in" data-aos-easing="ease-in-back"
+                            data-aos-delay="10" data-aos-offset="0">Гарантия</a>
+                    </li>
+                    {% url 'loan' as url %}
+                    <li class="nav-item {% if request.path == url %}active{% endif %}">
+                        <a class="nav-link sf-reg" href="{% url 'loan' %}" data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="10" data-aos-offset="0">В кредит</a>
+                    </li>
+
+                    {% url 'articles' as url %}
+                    <li class="nav-item {% if request.path == url %}active{% endif %}">
+                        <a class="nav-link sf-reg" href="{% url 'articles' %}" data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="10" data-aos-offset="0">Статьи</a>
+                    </li>
+                    {% url 'contacts' as url %}
+                    <li class="nav-item {% if request.path == url %}active{% endif %}">
+                        <a class="nav-link sf-reg" href="{% url 'contacts' %}" data-aos="fade-zoom-in" data-aos-easing="ease-in-back"
+                            data-aos-delay="10" data-aos-offset="0">Контакты</a>
+                    </li>
+                    {% url 'catalog:products' as url %}
+                    <li class="nav-item d-lg-none d-block {% if request.path == url %}active{% endif %}">
+                        <a class="nav-link sf-reg" href="{% url 'catalog:products' 'tradeIn' %}">Trade In</a>
+                    </li>
+                    
+                </ul>
+                <div class="nav-link sf-reg d-lg-flex d-none" style="padding: 1% 0%;">
+                    <img class="lazyload" data-src="{% static "img/user24px.svg" %}" alt="" data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="10" data-aos-offset="0">
+                    {% if user.is_anonymous %}
+                        <a class="nav-link sf-reg pr-0" href="{% url 'accounts:login' %}" data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="10" data-aos-offset="0"  style="padding-left:6px">
+                            Авторизация
+                        </a>
+                    {% else %}
+                        {% if user.is_superuser %}
+                            <a class="nav-link sf-reg pr-0" href="/log">Личный кабинет</a>
+                        {% else %}
+                            <a class="nav-link sf-reg pr-0" href="{% url 'accounts:profile' %}">Личный кабинет</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="mobileBasket" style="display: none">
+            <div class="basket-inner col-10 mx-auto {% if not products_in_basket %} d-none {% endif %}">
+                <p class="sf-bold text-center">Корзина</p>
+                <p class="sf-light bb-grey text-center">Товаров: <span
+                        class="product-counter">{{ products_in_basket|length }}</span></p>
+                <div class="basket-place">
+                    {% for product in products_in_basket %}
+                        <div class="dropdown-item bb-grey rounded-0 d-flex px-0 product-{{ product.id }}">
+                            <div class="col-3 px-1">
+                                <img class="lazyload" data-src="{{ product.get_product_image }}" alt="">
+                            </div>
+                            <div class="col-7 px-1">
+                                <p class="sf-light desc of-ellipsis">
+                                    {{ product.get_product_title }}
+                                </p>
+
+                            </div>
+                            <div class="col-2">
+                                <a class="delete-from-basket" data-id="{{ product.get_product_id }}"
+                                   data-unique="{{ product.id }}">
+                                    <img class="lazyload" data-src="{% static 'img/x-circle.svg' %}" alt="">
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <a href="{% url 'checkout' %}"
+                   class="btn btn-primary w-100 mt-4  waves-effect waves-light mr-0">
+                    ОФОРМИТЬ ЗАКАЗ
+                </a>
+            </div>
+
+            <div class="{% if not products_in_basket %}d-flex{% endif %} d-none  empty-basket flex-column align-items-center justify-content-center my-3">
+                <img class="lazyload" data-src="{% static 'img/empty-basket.svg' %}" alt="">
+                <p class="sf-medium empty-text">
+                    Корзина пуста
+                </p>
+            </div>
+            <div class="col-10 mx-auto mb-4">
+                <div class="basket-link d-flex">
+                    <img class="lazyload" data-src="{% static 'img/b-union.svg' %}" alt="">
+                    <a class="sf-reg link" href="{% url 'basket' %}">Корзина</a>
+                </div>
+                <div class="basket-link d-flex">
+                    <img class="lazyload" data-src="{% static 'img/b-user.svg' %}" alt="">
+                    {% if user.is_anonymous %}
+                        <a class="nav-link sf-reg pr-0" href="{% url 'accounts:login' %}" style="padding-left:6px">
+                            Авторизация
+                        </a>
+                        <p class="nav-link sf-reg px-1">
+                            /
+                        </p>
+                        <a class="nav-link sf-reg pl-0" href="{% url 'accounts:register' %}">
+                            Регистрация
+                        </a>
+                    {% else %}
+                        <a class="sf-reg link pr-0" href="{% url 'accounts:profile' %}">Личный кабинет</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="mobileSearch bg-white p-2 d-lg-none" style="display: none">
+        <input class="main-search form-control sf-reg o-none" type="search"
+                           placeholder="Поиск по всем категориям" aria-label="Search">
+            <div class="search-result m-2">
+                <p class="sf-light">Популярные запросы</p>
+                <div class="d-flex flex-wrap mt-2">
+                    {% for popular in popular_search %}
+                        <a href="{% url 'search_with_value' popular.name %}"
+                           class="popular-search">{{ popular.name }}</a>
+                    {% endfor %}
+                </div>
+                <div class="search-result bg-white mb-2 d-none"
+                      style="right: 0; top: 160%;width:100%; z-index:12;">
+                    <p class="sf-light mb-2">Найдено по заросу</p>
+                    <div class="content w-100 overflow-auto" style="max-height:500px;">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="view-catalog btn btn-primary d-lg-none d-block" data-toggle="modal" data-target="#viewCatalog">
+            Каталог товаров
+        </button>
+    </nav>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light d-lg-flex d-none w-100 second-nav" style="padding: 0% 2.3%;">
+        <div class="container px-3">
+            <a class="navbar-brand sf-sem" href="{% url 'home' %}" data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="10" data-aos-offset="0"><img class="lazyload" width="80px" height="auto" data-src="{% static '_image/istore_logo.png' %}" alt="" style="width:80px;"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav col justify-content-between" style="min-width: 574px;">
+                    <li class="nav-item">
+                        <a href="/about-us" class="nav-link sf-reg custom" data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="10" data-aos-offset="0">
+                            Магазин техники <br> Apple в Бишкеке</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link sf-reg custom"  href="/contacts" data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="10" data-aos-offset="0">
+                            {{settings.address}} <br> <span class="text-dark"> {{settings.schedule}}</span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown align-items-center d-flex ">
+                        <a href="/contacts" class="nav-link sf-sem text-dark custom" data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="10" data-aos-offset="0">
+                            {{settings.contact_first}} <br> {{settings.contact_second}}</a>
+                    </li>
+                </ul>
+                <div class="search-wrap ml-3">
+                    <input class="main-search form-control mr-sm-2 sf-reg o-none" type="search"
+                           placeholder="Поиск по всем категориям" aria-label="Search">
+                    <a href="" class="goToSearch d-none"></a>
+                    <div class="position-relative">
+                        <div class="position-absolute search-result bg-white mt-2 d-none"
+                             id="search-result" style="right: 0; top: 160%;width:100%; z-index:12;">
+                            <p class="sf-light">Популярные запросы</p>
+                            <div class="d-flex flex-wrap mt-2">
+                                {% for popular in popular_search %}
+                                    <a href="{% url 'search_with_value' popular.name %}"
+                                       class="popular-search">{{ popular.name }}</a>
+                                {% endfor %}
+                            </div>
+                            <div class="search-result bg-white mt-2 d-none"
+                                 id="search-result-with-text" style="right: 0; top: 160%;width:100%; z-index:12;">
+                                <p class="sf-light mb-2">Найдено по заросу</p>
+                                <div class="content w-100 overflow-auto" style="max-height:500px;">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ml-2  h-100 position-relative" style="transition: 1s;">
+                    <div class="dropdown align-items-center d-flex">
+                        <a class="sf-reg d-flex align-items-center h-100 w-100" href="{% url 'basket' %}">
+                            <img class="lazyload" data-src="{% static 'img/union.svg' %}" alt="">
+                            <div class="shop-round">{{ products_in_basket|length }}</div>
+                        </a>
+                        <div class="dropdown-menu basket-menu" aria-labelledby="nav-phone">
+
+                            <div class="basket-inner {% if not products_in_basket %} d-none {% endif %}">
+
+                                <p class="sf-bold text-center">Корзина</p>
+                                <p class="sf-light bb-grey text-center">Товаров: <span
+                                        class="product-counter">{{ products_in_basket|length }}</span></p>
+                                <div class="basket-place">
+                                    {% for product in products_in_basket %}
+                                        <div class="dropdown-item bb-grey rounded-0 d-flex px-0 product-{{ product.id }}">
+                                            <div class="col-3 px-1">
+                                                <img class="lazyload" data-src="{{ product.get_product_image }}" alt="">
+                                            </div>
+                                            <div class="col-7 px-1">
+                                                <p class="sf-light desc of-ellipsis">
+                                                    {{ product.get_product_title }}
+                                                </p>
+                                            </div>
+                                            <div class="col-2">
+                                                <a class="delete-from-basket" data-id="{{ product.get_product_id }}"
+                                                   data-unique="{{ product.id }}">
+                                                    <img class="lazyload" data-src="{% static 'img/x-circle.svg' %}" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <a href="{% url 'checkout' %}"
+                                   class="btn btn-primary w-100 mt-4  waves-effect waves-light mr-0">
+                                    ОФОРМИТЬ ЗАКАЗ
+                                </a>
+                            </div>
+                            <div class="{% if not products_in_basket %}d-flex{% endif %} d-none  flex-column align-items-center justify-content-center my-3 empty-basket">
+                                <div class="d-flex flex-column align-items-center justify-content-center my-3 empty-basket">
+                                    <img class="lazyload" data-src="{% static 'img/empty-basket.svg' %}" alt="">
+                                    <p class="sf-medium empty-text">
+                                        Корзина пуста
+                                    </p>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <nav class="navbar navbar-expand-lg navbar-grey d-lg-flex d-none w-100 third-nav">
+    <div class="collapse navbar-collapse container">
+        <ul class="w-100 px-0 navbar-nav justify-content-between">
+            <li class="nav-item d-flex flex-column justify-content-end" data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="10" data-aos-offset="0">
+                <a class="nav-link sf-reg d-flex flex-column pl-0" href="{% url 'catalog:products' 'iphone' %}"><img
+                        data-src="{% static '/img/iphone.svg' %}" alt="" class="ho-ic lazyload">
+                    iPhone</a>
+            </li>
+            <li class="nav-item d-flex flex-column justify-content-end text-center" data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="10" data-aos-offset="0">
+                <a class="nav-link sf-reg d-flex flex-column lazyload" href="{% url 'catalog:products' 'macBook' %}">
+                    <img class="lazyload" data-src="{% static '/img/macbook.svg' %}" alt="">
+                    Mac</a>
+            </li>
+            <li class="nav-item  d-flex flex-column justify-content-end" data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="10" data-aos-offset="0">
+                <a class="nav-link sf-reg d-flex flex-column" style="text-align: center;"
+                   href="{% url 'catalog:products' 'iPad' %}"><img class="lazyload" data-src="{% static '/img/ipad.svg' %}" alt="">
+                    iPad</a>
+            </li>
+            <li class="nav-item d-flex flex-column justify-content-end" data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="10" data-aos-offset="0">
+                <a class="nav-link sf-reg d-flex flex-column" style="text-align: center;"
+                   href="{% url 'catalog:products' 'iMac' %}"><img class="lazyload" data-src="{% static '/img/iMac.svg' %}" alt="">
+                    iMac</a>
+            </li>
+            <li class="nav-item d-flex flex-column justify-content-end" data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="10" data-aos-offset="0">
+                <a class="nav-link sf-reg d-flex flex-column" href="{% url 'catalog:products' 'apple-watch' %}">
+                    <img class="lazyload" data-src="{% static '/img/watch.svg' %}" alt="">
+                    Watch</a>
+            </li>
+            <li class="nav-item d-flex flex-column justify-content-end" data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="10" data-aos-offset="0">
+                <a class="nav-link sf-reg d-flex flex-column" href="{% url 'catalog:products' 'airpods' %}">
+                    <img class="lazyload" data-src="{% static '/img/airpods.svg' %}" alt="">
+                    AirPods</a>
+            </li>
+
+            <li class="nav-item d-flex flex-column justify-content-end" data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="10" data-aos-offset="0">
+                <a class="nav-link sf-reg d-flex flex-column" href="{% url 'catalog:products' 'gadgets' %}">
+                    <img class="lazyload" data-src="{% static '/img/apple_tv.svg' %}" alt="">
+                    Гаджеты</a>
+            </li>
+            <li class="nav-item d-flex flex-column justify-content-end" data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="10" data-aos-offset="0">
+                <a class="nav-link sf-reg d-flex flex-column" href="{% url 'catalog:products' 'accessory' %}">
+                    <img class="lazyload" data-src="{% static '/img/accessory.svg' %}" alt="">
+                    Аксессуары</a>
+            </li>
+            <li class="nav-item d-flex flex-column justify-content-end" data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="10" data-aos-offset="0">
+                <a class="nav-link sf-reg d-flex flex-column" href="{% url 'compare' %}">
+                    <img class="lazyload" data-src="{% static '/img/comparison.svg' %}" alt="">
+                    Сравнение</a>
+            </li>
+            <li class="nav-item d-flex flex-column justify-content-end" data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="10" data-aos-offset="0">
+                <a class="nav-link sf-reg d-flex flex-column pr-0"
+                   href="{% url 'catalog:products' 'tradeIn' %}">
+                   <img class="lazyload" data-src="{% static '/img/trad-icc.svg' %}" alt="">
+                    Trade In</a>
+            </li>
+        </ul>
+    </div>
+    </nav>
+    <div class="w-100 pl-lg-5 pl-1 d-none" style="background:#5E8BCE;color:#fff;">
+        <div class="testing-period container pl-0 overflow-hidden" style="height:24px;">
+            Сайт работает в тестовом режиме. Пожалуйста, свяжитесь с нами, чтобы узнать о наличии товара.
+        </div>
+    </div>
+</nav>

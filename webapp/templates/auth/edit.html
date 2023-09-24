@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% load static %}
+    <div class="wrapper">
+        <section class="profile-first mb-5 edit">
+            <form action="{% url 'accounts:edit_profile' %}" method="post">
+                <div class="h-100 container d-flex flex-wrap">
+                    <div class="col-12 px-1 my-3">
+                        <h3 class="sf-sem secondary-title">Личный кабинет</h3>
+                    </div>
+                    <div class="col-md-6 col-12 px-1 mt-2 mt-lg-0">
+                        <div class="profile-card d-flex flex-column h-auto pr-1">
+                            <div class="d-flex">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <img src="{% static 'img/user.svg' %}" alt="">
+                                    <h4 class="sf-medium mb-0 profile-header">Персональные данные</h4>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="profile-card product d-flex flex-column h-auto">
+                                  {% csrf_token %}
+                                {{ form.name }}
+                                {{ form.name.errors}}
+                                {{ form.phone }}
+                                {{ form.phone.errors}}
+                                {{ form.email }}
+                                {{ form.email.errors}}
+                                {{ form.password }}
+                                {{ form.password.errors}}
+                                <div class="d-flex flex-wrap mt-2">
+                                    <div class="col-sm-6 col-12 pr-2 pl-0">
+                                        {{ form.birth_date.label_tag }}
+                                        {{ form.birth_date }}
+                                        {{ form.birth_date.errors}}
+                                    </div>
+                                    <div class="col-sm-6 col-12 pl-2 pr-0">
+                                        {{ form.gender.label_tag }}
+                                        <div class="h-list d-flex align-items-end custom01" style="height: 37px;">
+                                            {{ form.gender }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary login-btn w-100 waves-effect waves-light save-profile">
+                                Сохранить
+                            </button>
+                    </div>
+                    <div class="col-md-6 col-12 px-1 mt-2 mt-lg-0">
+                        <div class="profile-card d-flex flex-column h-auto">
+                            <div class="d-flex">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <img src="{% static 'img/large-pin.svg' %}" alt="">
+                                    <h4 class="sf-medium mb-0 profile-header">Адрес доставки</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-card product d-flex flex-column h-auto">
+                            <div class="address w-100 mb-3">
+                                {{ form.address }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+{% endblock %}

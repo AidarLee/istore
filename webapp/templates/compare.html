@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load check_condition %}
+{% load static %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+      <li><a href="{% url 'home' %}"><img src="{% static 'img/home.svg' %}" alt=""></a></li>
+      <li><img src="{% static 'img/left-bread.svg' %}" alt=""></li>
+      <li class="active">Сравнение</li>
+    </ul>
+{% endblock breadcrumb %}
+
+{% block content %}
+    <div class="wrapper">
+        <section class="compare-first">
+            <div class="h-100 container d-flex flex-wrap">
+                <div class="text-center w-100 mt-5">
+                    <h3 class="sf-sem main-title">Сравнение </h3>
+                    <h4 class="sf-light main-little-description">
+                        Выберите самое лучшее для себя
+                    </h4>
+                </div>
+                <div class="mb-3 d-flex justify-content-center col-12 px-0">
+                    <div class="col-lg-4 col-12 blur-search px-2">
+                        <select class="form-control search compare-category-select" name="" id="">
+                            <option value="">Выбрать устройство для сравнения</option>
+                            {% for compare_object in compare %}
+                                {% if compare_object.title == category %}
+                                    <option value="{{ compare_object.title }}" selected>{{ compare_object.title }}</option>
+                                {% else %}
+                                    <option value="{{ compare_object.title }}">{{ compare_object.title }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="compare-second container pb-5 px-2 px-mb-0">
+            <div class="h-100 d-flex flex-wrap justify-content-center sticky">
+                <div class="col-lg-4 col-6 blur-search  px-2">
+                    <select class="form-control search for-compare" data-id="1" name="" val="{{product_first}}">
+                        {% for product in products %}
+                            <option value="{{ product.product.id }}">{{ product.product.product_title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-lg-4 col-6 blur-search px-2">
+                    <select class="form-control search for-compare" data-id="2" name=""  val="{{product_second}}">
+                        {% for product in products %}
+                            <option value="{{ product.product.id }}" >{{ product.product.product_title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-4 d-lg-block d-none blur-search  px-2">
+                    <select class="form-control search for-compare" data-id="3" name="" val="{{product_third}}">
+                        {% for product in products %}
+                            <option value="{{ product.product.id }}" >{{ product.product.product_title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="container d-flex flex-wrap compare-content">
+                <div class="col-lg-4 col-6 text-center product-compare d-flex flex-column justify-content-end align-items-center"
+                     data-id="1">
+                </div>
+                <div class="col-lg-4 col-6 text-center product-compare d-flex flex-column justify-content-end align-items-center"
+                     data-id="2">
+                </div>
+                <div class="col-lg-4 col-6 text-center product-compare d-lg-flex d-none flex-column justify-content-end align-items-center"
+                     data-id="3">
+                </div>
+            </div>
+            <div class="container product-compare-content">
+            </div>
+        </section>
+    </div>
+{% endblock %}

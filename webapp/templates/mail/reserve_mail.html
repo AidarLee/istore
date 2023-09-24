@@ -1,0 +1,140 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <h1 style="color: #1D1D1F;"> Бронь с istore.kg </h1>
+    <div style="max-width: 600px;">
+        <div style="display: flex; width: 100%;">
+            <div style="width: 50%;">
+                <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Имя:</p>
+            </div>
+            <div style="width: 50%;">
+                <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{reserve.name}}</p>
+            </div>
+        </div>
+        <br>
+        <div style="display: flex; width: 100%;">
+            <div style="width: 50%;">
+                <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Контактный номер:</p>
+            </div>
+            <div style="width: 50%;">
+                <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{reserve.phone}}</p>
+            </div>
+        </div>
+        <br>
+        <div style="display: flex; width: 100%;">
+            <div style="width: 50%;">
+                <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Устройство:</p>
+            </div>
+            <div style="width: 50%;">
+                <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{reserve.product}}</p>
+            </div>
+        </div>
+        <br>
+        <div style="display: flex; width: 100%;">
+            <div style="width: 50%;">
+                <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Цвет:</p>
+            </div>
+            <div style="width: 50%;">
+                <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{reserve.color}}</p>
+            </div>
+        </div>
+        <br>
+        <div style="display: flex; width: 100%;">
+            <div style="width: 50%;">
+                <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Ёмкость:</p>
+            </div>
+            <div style="width: 50%;">
+                <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{reserve.capacity}}</p>
+            </div>
+        </div>
+        <br>
+        {% if reserve.keyboard %}
+            <div style="display: flex; width: 100%;">
+                <div style="width: 50%;">
+                    <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Раскладка клавиатуры:</p>
+                </div>
+                <div style="width: 50%;">
+                    <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{reserve.keyboard}}</p>
+                </div>
+            </div>
+            <br>
+        {% endif %}
+        {% if reserve.caseSize %}
+            <div style="display: flex; width: 100%;">
+                <div style="width: 50%;">
+                    <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Размер корпуса:
+                    </p>
+                </div>
+                <div style="width: 50%;">
+                    <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{reserve.caseSize}}</p>
+                </div>
+            </div>
+            <br>
+        {% endif %}
+        {% if reserve.connectivity %}
+            <div style="display: flex; width: 100%;">
+                <div style="width: 50%;">
+                    <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Возможности подключения:
+                    </p>
+                </div>
+                <div style="width: 50%;">
+                    <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{reserve.connectivity}}</p>
+                </div>
+            </div>
+            <br>
+        {% endif %}
+        {% if reserve.ram %}
+            <div style="display: flex; width: 100%;">
+                <div style="width: 50%;">
+                    <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Оперативная память:
+                    </p>
+                </div>
+                <div style="width: 50%;">
+                    <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{reserve.ram}}</p>
+                </div>
+            </div>
+            <br>
+        {% endif %}
+        {% if reserve.cpu %}
+            <div style="display: flex; width: 100%;">
+                <div style="width: 50%;">
+                    <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Процессор:
+                    </p>
+                </div>
+                <div style="width: 50%;">
+                    <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{reserve.cpu}}</p>
+                </div>
+            </div>
+            <br>
+        {% endif %}
+        {% if reserve.edition %}
+            <div style="display: flex; width: 100%;">
+                <div style="width: 50%;">
+                    <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Edition:
+                    </p>
+                </div>
+                <div style="width: 50%;">
+                    <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{reserve.edition}}</p>
+                </div>
+            </div>
+            <br>
+        {% endif %}
+        {% if reserve.pattern %}
+            <div style="display: flex; width: 100%;">
+                <div style="width: 50%;">
+                    <p style="font-weight: 600;font-size: 16px;line-height: 130%;color: #1D1D1F;margin: 0;">Модель:
+                    </p>
+                </div>
+                <div style="width: 50%;">
+                    <p style="font-size: 16px;color: #5A5A61;margin: 0;">{{reserve.pattern}}</p>
+                </div>
+            </div>
+            <br>
+        {% endif %}
+    </div>
+</body>
+</html>

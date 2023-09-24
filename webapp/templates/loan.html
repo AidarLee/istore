@@ -1,0 +1,212 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load make_range %}
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+      <li><a href="{% url 'home' %}"><img src="{% static 'img/home.svg' %}" alt=""></a></li>
+      <li><img src="{% static 'img/left-bread.svg' %}" alt=""></li>
+      <li class="active">Оформление кредита</li>
+    </ul>
+{% endblock breadcrumb %}
+{% block content %}
+<div class="wrapper">
+    <section class="loan-first">
+        <div class="h-100 container d-flex flex-wrap">
+            <div class="text-center w-100 mt-5">
+                <h3 class="sf-sem main-title">{{text_arr.title}}</h3>
+                <h4 class="sf-light main-little-description">
+                    {{text_arr.title_2}}
+                </h4>
+            </div>
+        </div>
+    </section>
+    <section class="loan-second">
+        <div class="h-100 container d-flex flex-wrap pt-5">
+            <div class="col-lg-7 pr-4 col-12">
+                <p class="s-medium loan-header">{{text_arr.text_1}}</p>
+                <div class="bb-grey mt-4">
+                    <img class="credit-bank-img" src="/media/{{ bank.img }}" alt="">
+                </div>
+                <div class="d-flex bb-grey mt-2">
+                    <div class="col-8 pl-0">
+                        <p class="sf-reg loan-title">{{text_arr.text_2}}</p>
+                        <p class="sf-reg loan-body mt-2 credit-start-end-price" start="{{ bank.start_price }}" end="{{ bank.end_price }}">{{ bank.start_price }} - {{ bank.end_price }} сом</p>
+                    </div>
+                    <div class="col-4 pr-0">
+                        <p class="sf-reg loan-title">{{text_arr.text_3}}</p>
+                        <p class="sf-reg loan-body mt-2 credit-guarantor">
+                            {% if not bank.guarantor %}
+                                {{text_arr.text_4}}
+                            {% else %}
+                                {{text_arr.text_5}}
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+                <div class="d-flex bb-grey mt-2">
+                    <div class="col-8 pl-0">
+                        <p class="sf-reg loan-title">{{text_arr.text_6}}</p>
+                        <p class="sf-reg loan-body mt-2 credit-initial-fee-title">до {{bank.initial_fee_before}} сом без вноса</p>
+                    </div>
+                    <div class="col-4 pr-0">
+                        <p class="sf-reg loan-title">{{text_arr.text_7}}</p>
+                        <p class="sf-reg loan-body mt-2 credit-start-end-period">{{bank.start_period}}-{{bank.end_period}} месяцев</p>
+                    </div>
+                </div>
+                <div class="d-flex mt-2">
+                    <div class="col-8 pl-0">
+                        <p class="sf-reg loan-title">{{text_arr.text_8}}</p>
+                        <p class="sf-reg loan-body mt-2 credit-term-of-consider">{{bank.term_of_consider}}</p>
+                    </div>
+                    <div class="col-4 pr-0">
+                        <p class="sf-reg loan-title">{{text_arr.text_9}}</p>
+                        <p class="sf-reg loan-body mt-2 credit-repayment">
+                            {% if bank.repayment %}
+                            {{ bank.repayment }}
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+                <p class="s-medium loan-header mt-5">{{text_arr.text_22}}</p>
+                <div class="sf-reg loan-title mt-2 credit-desc">
+                    {% if bank.desc %}
+                    {{ bank.desc|safe }}
+                    {% endif %}
+                </div>
+                <p class="s-medium loan-header mt-4">{{text_arr.text_23}}</p>
+                <div class="sf-reg loan-title mt-2 credit-desc-in-office">
+                    {% if bank.desc_for_office %}
+                    {{ bank.desc_for_office|safe }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-5 pl-4 col-12">
+                <p class="s-medium loan-header">{{text_arr.text_10}}</p>
+                
+                <form action="{% url 'add_on_credit' %}" method="post">
+                    {% csrf_token %}
+                    <p class="sf-reg loan-title mt-2">{{text_arr.text_24}}</p>
+                    <select class="form-control choose-bank-option loan" name="">
+                        <option value="online">Онлайн</option>
+                        <option value="offline">Офлайн</option>
+                    </select>
+                    <p class="sf-reg loan-title mt-2">{{text_arr.text_12}}</p>
+                    <select class="form-control loan choose-bank" name="bank">
+                        {% for bank_loop in banks %}
+                        <option class="bank {{ bank_loop.online|online_offline}}" {% if not bank_loop.online %} disabled {% endif %}
+                            value="{{bank_loop.id}}" {% if bank.id == bank_loop.id %}selected{% endif %}>{{bank_loop.title}}</option>
+                        {% endfor %}
+                    </select>
+                    <p class="sf-reg loan-title mt-2">{{text_arr.text_13}}</p>
+                    <select class="form-control loan choose-period" name="period">
+                        {% for i in bank.start_period|range:bank.end_period %}
+                        <option value="{{i}}" {% if forloop.first %}selected{% endif %}>{{i}} {{ i|month_correct }}</option>
+                        {% endfor %}
+                    </select>
+                
+                    <p class="sf-reg loan-title mt-2">{{text_arr.text_15}}</p>
+                    <input type="number" name="initial_fee" class="form-control loan initial-fee" data-fee="{{ bank.initial_fee }}"
+                        data-before="{{ bank.initial_fee_before }}" placeholder="0 сом">
+                    <p class="sf-reg loan-title mt-2">{{text_arr.text_14}}</p>
+                    <input type="number" class="form-control loan percent" data-percent="{{ bank.get_percent }}"
+                        data-percents="{{ bank.get_percents }}" placeholder="{{ bank.get_percent }} %" disabled>
+                    <p class="sf-reg loan-title mt-4">{{text_arr.text_11}}</p>
+                    <input type="hidden" name="products" id="productsForPurchase">
+                    <div class="w-100 mt-2">
+                        <div class="loan-product">
+                            {% for product in products %}
+                            <div class="loan-result p-3 position-relative" data-id="{{ product.product.id }}"
+                                data-spec="{{ product.specific.id }}">
+                                <a class="remove-loan-products">
+                                    <img src="/static/img/x-red.svg" alt="">
+                                </a>
+                                <div class="col-12">
+                                    <p class="sf-reg loan-title">Устройство</p>
+                                    <p class="sf-reg loan-body mt-2">
+                    
+                                        {{ product.product }} {% if product.specific.capacity %} ,{{ product.specific.capacity }} 
+                                        {% endif %},
+                                        {{product.specific.get_color_name }}
+                                        {% for module in product.modules %}
+                                        , {{module.title}}
+                                        {% endfor %}
+                                    </p>
+                                </div>
+                                <div class="d-flex flex-wrap justify-content-between">
+                                    <div class="col-12 mt-4">
+                                        <p class="sf-reg loan-title">Цена устройства</p>
+                                        <p class="sf-reg loan-body mt-2 product-price" data-price="{{ product.specific.price }}">
+                                            ${{ product.specific.price }}
+                                        </p>
+                                        <p class="sf-reg loan-title mt-2 product-converted-price"
+                                            data-price="{{ product.specific.convert_product_price }}">
+                                            {{ product.specific.convert_product_price }} сом
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                    
+                        </div>
+                        <input class="addNewProduct sf-reg mt-4 w-100" type="text" placeholder="+ Добавить еще устройства"
+                            onfocus="this.placeholder = ''" onblur="this.placeholder = '+ Добавить еще устройства'">
+                        <div class="position-relative mb-4">
+                            <div class="search-result-product bg-white mt-2" style="right: 0; top: 160%;width:100%; z-index:12;">
+                                <div class="content w-100 d-none overflow-auto" style="max-height:250px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-3 loan-result mt-5">
+                        <div class="w-100">
+                            <p class="s-medium loan-header">{{text_arr.text_16}}</p>
+                        </div>
+                        <div class="d-flex justify-content-between mt-3">
+                            <p class="sf-reg loan-title">{{text_arr.text_17}}</p>
+                            <p class="sf-reg loan-body credit-all-sum"></p>
+                        </div>
+                        <div class="d-flex justify-content-between mt-3">
+                            <p class="sf-reg loan-title">{{text_arr.text_18}}</p>
+                            <p class="sf-reg loan-body credit-initial-fee"></p>
+                        </div>
+                        <div class="d-flex justify-content-between mt-3">
+                            <p class="sf-reg loan-title">{{text_arr.text_19}}</p>
+                            <p class="sf-reg loan-body credit-period"></p>
+                        </div>
+                        <div class="d-flex justify-content-between mt-3">
+                            <p class="sf-reg loan-title">{{text_arr.text_20}}</p>
+                            <p class="sf-reg loan-body credit-per-month-payment"></p>
+                        </div>
+                        <div class="d-flex justify-content-between mt-3">
+                            <p class="sf-reg loan-title">{{text_arr.text_21}}</p>
+                            <p class="sf-reg loan-body credit-result"></p>
+                        </div>
+                        <div class="d-flex justify-content-between mt-3">
+                            <p class="sf-reg loan-title">Наценка</p>
+                            <p class="sf-reg loan-body markup-result"></p>
+                        </div>
+                        <div class="d-flex justify-content-between mt-3">
+                            <p class="sf-reg loan-title">Сумма товаров</p>
+                            <p class="sf-reg loan-body product-all-result"></p>
+                        </div>
+                    </div>
+                    <div class="p-2 hint-for-disable {% if products %} d-none
+                        {% endif%}">
+                        <p class="sf-reg loan-title">
+                            Стоимость товаров меньше минимальной суммы кредитования
+                        </p>
+                    </div>
+                    <button type="submit" class="btn btn-primary px-5 purchase-on-credit mb-5 mt-2 w-100" {% if not products %} disabled
+                        {% endif%}>
+                        Заполнить заявку
+                    </button>
+                </form>
+
+                
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+{% block scripts %}
+    <script defer src="{% static 'js/loan.js' %}"></script>
+{% endblock %}

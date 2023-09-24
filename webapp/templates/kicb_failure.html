@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load make_range %}
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+      <li><a href="{% url 'home' %}"><img src="{% static 'img/home.svg' %}" alt=""></a></li>
+      <li><img src="{% static 'img/left-bread.svg' %}" alt=""></li>
+      <li class="active">Оплата через карту</li>
+    </ul>
+{% endblock breadcrumb %}
+{% block content %}
+<div class="wrapper">
+    <section class="loan-first">
+        <div class="h-100 container d-flex flex-wrap">
+            <div class="text-center w-100 my-5">
+                <img src="{% static 'img/red-mark.svg' %}" alt="" style="width:100%;max-width:84px;">
+                <h3 class="sf-sem main-title">Не удалось провести оплату</h3>
+                <h3 class="sf-sem main-little-description">
+                    При попытке оплаты что-то пошло не так
+                    <br>
+                    Попробуйте оплатить через некоторое время
+                </h3>
+                <a class="btn btn-primary sf-medium success-btn" href="{% url 'home' %}">Вернуться в магазин</a>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

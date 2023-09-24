@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block scripts %}
+    
+{% endblock %}
+{% block dependence %}
+    <script src="https://unpkg.com/imask@6.2.2/dist/imask.js"></script>
+    <script type="text/javascript"
+        src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js" defer></script>
+{% endblock %}
+
+{% block content %}
+    {% load static %}
+    <div class="wrapper">
+        <section class="register-first">
+            <button id="appleid-signin" class="d-none"></button>
+            <form action="{% url 'accounts:register' %}" method="post">
+                <div class="h-100 container d-flex flex-wrap align-items-center justify-content-center my-5">
+                    <div class="login-card register-card my-2 flex-column justify-content-between"
+                         style="display: flex;height: 500px;">
+                        <a class="go-back w-100 text-right c-point opacity-0" data-to=".code-card"
+                           data-from=".register-card">
+                            <img class="rotate180" src="{% static 'img/slide-left.svg' %}" alt="">
+                        </a>
+                        <h3 class="sf-sem login-text mb-1">Cоздать профиль</h3>
+                        <div class="d-flex flex-wrap w-100 justify-content-center  py-3">
+                            <a href="{% url 'accounts:login_google' %}">
+                                <img width="50px" height="50px" src="{% static '/img/google.svg' %}" alt="">
+                            </a>
+                            <a id="appleid" class="c-pointer mx-4">
+                                <img width="50px" height="50px" src="{% static '/img/apple.svg' %}" alt="">
+                            </a>
+                            <a href="{% url 'accounts:login_facebook' %}">
+                                <img width="50px" height="50px" src="{% static '/img/facebook-ico.svg' %}" alt="">
+                            </a>
+                        </div>
+                        <input type="hidden" class="form-control" name="forget" value="">
+                        {{ form.name }}
+                        {{ form.password }}
+                        <div class="w-100 blur-search">
+                            <select class="form-control loan" name="" id="country">
+                                <option value="1">Кыргызстан</option>
+                                <option value="2">Казахстан</option>
+                                <option value="3">Россия</option>
+                                <option value="4">Америка</option>
+                                <option value="5">Германия</option>
+                                <option value="6">Турция</option>
+                                <option value="7">Другое</option>
+                            </select>
+                        </div>
+                        {{ form.phone }}
+                        <div class="info d-flex align-items-center mt-2">
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="#828282"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 11.5C2.95 11.5 0.5 9.05 0.5 6C0.5 2.95 2.95 0.5 6 0.5C9.05 0.5 11.5 2.95 11.5 6C11.5 9.05 9.05 11.5 6 11.5ZM6 1.5C3.5 1.5 1.5 3.5 1.5 6C1.5 8.5 3.5 10.5 6 10.5C8.5 10.5 10.5 8.5 10.5 6C10.5 3.5 8.5 1.5 6 1.5Z"
+                                      fill="#828282"/>
+                                <path d="M6 6.5C5.7 6.5 5.5 6.3 5.5 6V4C5.5 3.7 5.7 3.5 6 3.5C6.3 3.5 6.5 3.7 6.5 4V6C6.5 6.3 6.3 6.5 6 6.5Z"
+                                      fill="#828282"/>
+                                <path d="M6 8.5C5.85 8.5 5.75 8.45 5.65 8.35C5.55 8.25 5.5 8.15 5.5 8C5.5 7.95 5.5 7.85 5.55 7.8C5.6 7.75 5.6 7.7 5.65 7.65C5.8 7.5 6 7.45 6.2 7.55C6.25 7.55 6.25 7.55 6.3 7.6C6.3 7.6 6.35 7.65 6.4 7.65C6.45 7.7 6.5 7.75 6.5 7.8C6.5 7.85 6.5 7.95 6.5 8C6.5 8.05 6.5 8.15 6.45 8.2C6.4 8.25 6.4 8.3 6.35 8.35C6.25 8.45 6.15 8.5 6 8.5Z"
+                                      fill="#828282"/>
+                            </svg>
+                            <p class="info-text ml-2 desc" id="dispatch-value">Пример 996555555555</p>
+                        </div>
+                        
+                        <div class="form-group mt-3 d-flex justify-content-start align-items-center">
+                            <input type="checkbox" class="mr-2 checkbox-custom c-point" id="agreement">
+                            <a class="d-flex align-items-center h-100 login-agree" href="/agreement" target="_blank" style="font-size: 11px;"> 
+                                    Я принимаю условия пользовательского соглашения
+                            </a>
+                        </div>
+                        <input type="button" value="Получить код" class="btn btn-primary login-btn getCode w-100 waves-effect waves-light mt-0"
+                            disabled>
+                        <a class="login-link mt-3" href="{% url 'accounts:login' %}">У вас есть аккаунт?</a>
+                    </div>
+                    <div class="login-card code-card my-5 flex-column justify-content-between" style="display: none">
+                        <a class="go-back  c-point" data-from=".code-card" data-to=".register-card">
+                            <img src="{% static 'img/slide-left.svg' %}" alt="">
+                        </a>
+                        {% csrf_token %}
+                        <h3 class="sf-sem login-text mb-2">Введите код</h3>
+                        <div class="w-50 px-3 mx-auto label">
+                            {{ form.code }}
+                        </div>
+                        <div class="info d-flex opacity-0 align-items-center mt-2">
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="#828282"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 11.5C2.95 11.5 0.5 9.05 0.5 6C0.5 2.95 2.95 0.5 6 0.5C9.05 0.5 11.5 2.95 11.5 6C11.5 9.05 9.05 11.5 6 11.5ZM6 1.5C3.5 1.5 1.5 3.5 1.5 6C1.5 8.5 3.5 10.5 6 10.5C8.5 10.5 10.5 8.5 10.5 6C10.5 3.5 8.5 1.5 6 1.5Z"
+                                      fill="#828282"/>
+                                <path d="M6 6.5C5.7 6.5 5.5 6.3 5.5 6V4C5.5 3.7 5.7 3.5 6 3.5C6.3 3.5 6.5 3.7 6.5 4V6C6.5 6.3 6.3 6.5 6 6.5Z"
+                                      fill="#828282"/>
+                                <path d="M6 8.5C5.85 8.5 5.75 8.45 5.65 8.35C5.55 8.25 5.5 8.15 5.5 8C5.5 7.95 5.5 7.85 5.55 7.8C5.6 7.75 5.6 7.7 5.65 7.65C5.8 7.5 6 7.45 6.2 7.55C6.25 7.55 6.25 7.55 6.3 7.6C6.3 7.6 6.35 7.65 6.4 7.65C6.45 7.7 6.5 7.75 6.5 7.8C6.5 7.85 6.5 7.95 6.5 8C6.5 8.05 6.5 8.15 6.45 8.2C6.4 8.25 6.4 8.3 6.35 8.35C6.25 8.45 6.15 8.5 6 8.5Z"
+                                      fill="#828282"/>
+                            </svg>
+                            <p class="info-text ml-2">Повторная отправка доступна через <span class="timer">01:00</span>
+                            </p>
+                            
+                        </div>
+                        <input type="button" value="Получить код"
+                            class="btn btn-primary login-btn getCode w-100 waves-effect waves-light getCodeSecond">
+                        <button type="submit" class="btn btn-primary login-btn join  w-100 waves-effect waves-light " disabled>
+                            Вход
+                        </button>
+                        
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+{% endblock %}

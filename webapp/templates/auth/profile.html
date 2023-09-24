@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% load static %}
+    <div class="wrapper">
+        <section class="profile-first mb-5">
+            <div class="h-100 container d-flex flex-wrap">
+                <div class="col-12 px-1 my-3">
+                    <h3 class="sf-sem secondary-title">Личный кабинет</h3>
+                    {% if notify %}
+                        <input type="hidden" name="" class="notify">
+                    {% endif %}
+                </div>
+                <div class="col-lg-4 col-12 px-1 h-auto">
+                    <div class="profile-card d-flex flex-column">
+                        <div class="d-flex">
+                            <div class="d-flex flex-column justify-content-center mr-3">
+                                {% if user.avatar %}
+                                    <img class="user-avatar" src="/media/{{ user.avatar }}" alt="">
+                                    <div class="d-flex justify-content-center">
+                                        <a class="change-avatar text-center mt-3 c-point mr-2">
+                                            <img src="{% static 'img/change_ava.svg' %}" alt="">
+                                        </a>
+                                        <a class="text-center mt-3 c-point" href="{% url 'accounts:remove_avatar' %}">
+                                            <img src="{% static 'img/remove_ava.svg' %}" alt="">
+                                        </a>
+                                    </div>
+                                {% else %}
+                                    <img class="user-avatar" src="{% static 'img/default_user.svg' %}" alt="">
+                                    <a class="change-avatar text-center mt-3 c-point">
+                                        <img src="{% static 'img/change_ava.svg' %}" alt="">
+                                    </a>
+                                {% endif %}
+
+                                <form class="saveUserAvatar d-none" action="{% url 'accounts:save_avatar' %}"
+                                      method="post"
+                                      enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <input type="file" name="avatar" id="fileToUpload" accept='image/*'>
+                                </form>
+                            </div>
+                            <div class="d-flex flex-column  o-hidden">
+                                <h4 class="sf-medium w-100 profile-title mt-2">{{ user.name|default:'Не указано' }}</h4>
+                                <div class="d-flex mt-2">
+                                    <p class="mb-0 sf-reg profile-secondary-desc" style="width: 60px;">Телефон: </p>
+                                    <p class="sf-reg profile-desc">{{ user.phone|default:'не указано' }}</p>
+                                </div>
+                                <div class="d-flex mt-2">
+                                    <p class="mb-0 sf-reg profile-secondary-desc" style="width: 40px;">Email: </p>
+                                    <p class="sf-reg profile-desc">{{ user.email|default:'не указано' }}</p>
+                                </div>
+                                <div class="d-flex mt-2">
+                                    <p class="mb-0 sf-reg profile-secondary-desc" style="width: 105px;">Адрес доставки: </p>
+                                    <p class="sf-reg profile-desc">{{ user.address|default:'не указано' }}</p>
+                                </div>
+                                {% if new_password %}
+                                    <div class="d-flex mt-2">
+                                        <p class="mb-0 sf-reg profile-secondary-desc">Ваш пароль: </p>
+                                        <p class="sf-reg profile-desc">{{new_password}}</p>
+                                    </div>
+                                    <div class="d-flex mt-2">
+                                        <p class="sf-reg profile-desc">Пароль доступен единожды для просмотра</p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="d-flex flex-wrap justify-content-between mt-auto">
+                            <a class="profile-link" href="{% url 'accounts:logout' %}">
+                                <img class="rotate180" src="{% static '/img/right-arr.svg' %}" alt="">
+                                выйти
+                            </a>
+                            <a class="profile-link" href="{% url 'accounts:edit' %}">
+                                редактировать данные
+                                <img src="{% static '/img/right-arr.svg' %}" alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12 px-1 mt-2 mt-lg-0">
+                    <div class="profile-card d-flex flex-column h-auto pr-1">
+                        <div class="d-flex">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <img src="{% static 'img/calendar.svg' %}" alt="">
+                                <h4 class="sf-medium mb-0 profile-header">Забронированные товары</h4>
+                            </div>
+                        </div>
+                    </div>
+                    {% if  reserved|length == 0 %}
+                        <div class="profile-card product d-flex flex-column  align-items-center justify-content-center">
+                            <img src="{% static 'img/empty-calendar.svg' %}" alt="">
+                            <p class="sf-reg empty-text">Нет забронированных товаров</p>
+                        </div>
+                    {% endif %}
+
+                    {% for reserve in reserved %}
+                        <div class="profile-card product d-flex">
+                            <div class="px-0 product-picture-div">
+                                <img class="product-picture" src="{{ reserve.get_product_image }}" alt="">
+                            </div>
+                            <div class="px-1 d-flex flex-wrap" style="width: calc(100% - 38px)">
+                                <div class="col-7 px-1">
+                                    <p class="mb-0 sf-reg profile-secondary-desc">Товар</p>
+                                    <p class="sf-reg profile-desc">{{ reserve.product }}</p>
+                                </div>
+                                <div class="col-5 px-1">
+                                    <p class="mb-0 sf-reg profile-secondary-desc">Дата брони</p>
+                                    <p class="sf-reg profile-desc">{{ reserve.pub_date|date:'d.m.y' }}</p>
+                                </div>
+                                <!-- <div class="col-sm-4 col-6 px-1 d-flex justify-content-end flex-column">
+                                    <p class="mb-0 sf-reg profile-secondary-desc">Дата конца брони</p>
+                                    <p class="sf-reg profile-desc">{{ reserve.created_at|date:'d.m.y' }}</p>
+                                </div> -->
+                                <div class="col-sm-3 col-6 px-1 d-flex justify-content-end flex-column">
+                                    <p class="mb-0 sf-reg profile-secondary-desc">Залог</p>
+                                    <p class="sf-reg profile-desc">внесен</p>
+                                </div>
+                                <!-- <div class="col-sm-5 col-11 px-1 d-flex align-items-end justify-content-end">
+                                    <a class="profile-link" href="{% url 'remove_reserve' reserve.id %}">
+                                        отменить бронь
+                                        <img src="{% static '/img/right-arr.svg' %}" alt="">
+                                    </a>
+                                </div> -->
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="col-lg-4 col-md-6 col-12 px-1 mt-2 mt-lg-0">
+                    <div class="profile-card d-flex flex-column h-auto">
+                        <div class="d-flex">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <img src="{% static 'img/history.svg' %}" alt="">
+                                <h4 class="sf-medium mb-0 profile-header">История заказов</h4>
+                            </div>
+                        </div>
+                    </div>
+                    {% if  ordered|length == 0 %}
+                        <div class="profile-card product d-flex flex-column align-items-center justify-content-center">
+                            <img src="{% static 'img/empty-history.svg' %}" alt="">
+                            <p class="sf-reg empty-text">Нет истории покупок</p>
+                        </div>
+                    {% endif %}
+                    {% if  ordered|length != 0 %}
+                        <div class="profile-card product">
+                            {% for order in ordered %}
+                                <div class="history-product d-flex">
+                                    <div class="history-picture-div">
+                                        <img class="history-picture" src="{{ order.image }}" alt="">
+                                    </div>
+                                    <div class="d-flex align-items-between o-hidden">
+                                        <div class="px-2 of-ellipsis">
+                                            <p class="sf-reg profile-desc">{{ order.name }}</p>
+                                            <p class="sf-reg profile-secondary-desc">{{ order.created_at|date:'d.m.y' }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+    </div>
+    </section>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'js/account.js' %}" defer></script>
+{% endblock %}

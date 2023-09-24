@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+      <li><a href="{% url 'home' %}"><img src="{% static 'img/home.svg' %}" alt=""></a></li>
+      <li><img src="{% static 'img/left-bread.svg' %}" alt=""></li>
+      <li><a href="{% url 'articles' %}">Блог</a></li>
+      <li><img src="{% static 'img/left-bread.svg' %}" alt=""></li>
+      <li class="active">{{article.title}}</li>
+    </ul>
+{% endblock breadcrumb %}
+{% block content %}
+    <div class="wrapper">
+        <section class="article-first px-lg-5 px-0">
+            <div class="h-100 container d-flex flex-wrap">
+                <div class="text-left w-100 my-3">
+                    <h3 class="sf-sem article-title of-3-ellipsis">{{ article.title }}</h3>
+                    <div class="d-flex my-2">
+                        <img src="{% static 'img/grey-calendar.svg' %}" alt="">
+                        <p class="sf-reg article-date ml-1">{{ article.pub_date|date:'F d, Y' }}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="article-first px-0">
+            <div class="h-100 d-flex flex-wrap">
+                <div class="text-center w-100 my-3">
+                    <img class="article-img response-img" src="{{ article.get_image }}" alt="">
+                </div>
+            </div>
+        </section>
+        <section class="article-second px-lg-5 px-0">
+            <div class="h-100 container">
+                <div class="d-flex flex-wrap justify-content-center position-relative">
+                    <div class="col-12 d-lg-none d-block">
+                        <div class="w-100 mb-3">
+                            <p class="sf-medium social-header">Поделиться</p>
+                            <div class="socials d-flex">
+                                <a href="https://www.facebook.com/sharer/sharer.php?u={{request.build_absolute_uri}}" target="_blank" class="social mr-1 facebook">
+                                    <img class="first" src="{% static 'img/facebook-g.svg' %}" alt="">
+                                    <img class="second" src="{% static 'img/facebook-hover.svg' %}" alt="">
+                                </a>
+                                <a href="https://t.me/share/url?url={{request.build_absolute_uri}}" target="_blank" class="social mr-1 telegram">
+                                    <img class="first" src="{% static 'img/telegram-g.svg' %}" alt="">
+                                    <img class="second" src="{% static 'img/telegram-hover.svg' %}" alt="">
+                                </a>
+                                <a href="http://vk.com/share.php?url={{request.build_absolute_uri}}" target="_blank" class="social mr-1 vk">
+                                    <img class="first" src="{% static 'img/vk.svg' %}" alt="">
+                                    <img class="second" src="{% static 'img/vk-hover.svg' %}" alt="">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                        {{ article.description|safe }}
+                    </div>
+                    <div class="col-12 d-lg-block d-none">
+                        <div class="w-100 mb-5">
+                            <p class="sf-medium social-header">Поделиться</p>
+                            <div class="socials d-flex">
+                                <a href="https://www.facebook.com/sharer/sharer.php?u={{request.build_absolute_uri}}" target="_blank"
+                                    class="social mr-1 facebook">
+                                    <img class="first" src="{% static 'img/facebook-g.svg' %}" alt="">
+                                    <img class="second" src="{% static 'img/facebook-hover.svg' %}" alt="">
+                                </a>
+                                <a href="https://t.me/share/url?url={{request.build_absolute_uri}}" target="_blank"
+                                    class="social mr-1 telegram">
+                                    <img class="first" src="{% static 'img/telegram-g.svg' %}" alt="">
+                                    <img class="second" src="{% static 'img/telegram-hover.svg' %}" alt="">
+                                </a>
+                                <a href="http://vk.com/share.php?url={{request.build_absolute_uri}}" target="_blank" class="social mr-1 vk">
+                                    <img class="first" src="{% static 'img/vk.svg' %}" alt="">
+                                    <img class="second" src="{% static 'img/vk-hover.svg' %}" alt="">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+{% endblock %}

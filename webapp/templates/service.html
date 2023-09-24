@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load filter_by_category %}
+{% load static %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+      <li><a href="{% url 'home' %}"><img src="{% static 'img/home.svg' %}" alt=""></a></li>
+      <li><img src="{% static 'img/left-bread.svg' %}" alt=""></li>
+      <li class="active">Сервис</li>
+    </ul>
+{% endblock breadcrumb %}
+
+{% block content %}
+    <div class="wrapper">
+        <section class="service-first">
+            <div class="h-100 container d-flex flex-wrap">
+                <div class="text-center w-100 my-5">
+                    <h3 class="sf-sem main-title">Сервис</h3>
+                    <h4 class="sf-light main-little-description">
+                        Ремонт и обслуживание Вашего устройства Apple
+                    </h4>
+                </div>
+            </div>
+        </section>
+        <section class="service-second">
+            <div class="h-100 container d-flex flex-wrap justify-content-center">
+                <div class="col-lg-2 col-md-4 col-6 mt-2 ml-lg-0 text-center px-2">
+                    <div class="service-card c-point  {% if category == 'iphone'%} active {% endif %}" data-category="iphone">
+                        <img class="response-img" src="{% static '/img/iphone.svg' %}" alt="">
+                        <p class="sf-medium service-text">iPhone</p>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 mt-2 ml-lg-0 text-center px-2">
+                    <div class="service-card c-point {% if category == 'macBook'%} active {% endif %}" data-category="macBook">
+                        <img class="response-img" src="{% static '/img/macbook.svg' %}" alt="">
+                        <p class="sf-medium service-text">MacBook</p>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 mt-2 ml-lg-0 text-center px-2">
+                    <div class="service-card c-point {% if category == 'iPad'%} active {% endif %}" data-category="iPad">
+                        <img class="response-img" src="{% static '/img/ipad.svg' %}" alt="">
+                        <p class="sf-medium service-text">iPad</p>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 mt-2 ml-lg-0 text-center px-2">
+                    <div class="service-card c-point {% if category == 'iMac'%} active {% endif %}" data-category="iMac">
+                        <img class="response-img" src="{% static '/img/iMac.svg' %}" alt="">
+                        <p class="sf-medium service-text">iMac</p>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 mt-2 ml-lg-0 text-center px-2">
+                    <div class="service-card c-point {% if category == 'apple-watch'%} active {% endif %}" data-category="apple-watch">
+                        <img class="response-img" src="{% static '/img/watch.svg' %}" alt="">
+                        <p class="sf-medium service-text">Apple Watch</p>
+                    </div>
+                </div>
+                <div class="col-md-10 col-12 px-2 mb-5">
+                    <div class="dropdown service" style="margin-top: 21px;">
+                        <button class="service-select main o-none" type="button" id="dropdownMenuButton1"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Модель вашего {{ category_name }}
+                        </button>
+                        <div class="dropdown-menu w-100 changeCategoryOptions" aria-labelledby="dropdownMenuButton1">
+                            {% for service in services %}
+                                    <a class="dropdown-item service-product"
+                                       data-id="{{ service.id }}">{{ service.name }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="dropdown service" style="margin-top: 10px;">
+                        <button class="service-select o-none" type="button" id="dropdownMenuButton2"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Причина неисправности
+                        </button>
+                        <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton2">
+                            <a class="dropdown-item service">Замена экрана</a>
+                            <a class="dropdown-item service">Не включается</a>
+                            <a class="dropdown-item service">Попадание влаги</a>
+                            <a class="dropdown-item service">Замена аккумулятора</a>
+                            <a class="dropdown-item service">Другая причина</a>
+                        </div>
+                    </div>
+                    <textarea class="form-control service-area" name="another" rows="5"
+                              placeholder="Ваше сообщение"></textarea>
+                    <button class="btn btn-primary service-btn w-100 waves-effect waves-light" data-toggle="modal"
+                            data-target="#callBack">Оставить заявку
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+    {% include 'modals/submit_application.html' %}
+{% endblock %}

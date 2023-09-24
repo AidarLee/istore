@@ -1,0 +1,25 @@
+{% load static %}
+<div class="basket-inner">
+    <p class="sf-bold text-center">Корзина</p>
+    <p class="sf-light bb-grey text-center">Товаров: {{ products|length }}</p>
+    {% for product in products %}
+        <div class="dropdown-item bb-grey rounded-0 d-flex px-0">
+            <div class="col-3 px-1">
+                <img src="{% static '_image/airpods-basket.png' %}" alt="">
+            </div>
+            <div class="col-7 px-1">
+                <p class="sf-light desc of-ellipsis">
+                    iPhone SE (2-ое поколение), 64 ГБ, белый
+                </p>
+                <a class="delete-from-basket">
+                    <img src="{% static 'img/x-circle.svg' %}" alt="">
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+
+    <a href="{% url 'checkout' %}"
+       class="btn btn-primary w-100 mt-4  waves-effect waves-light mr-0">
+        ОФОРМИТЬ ЗАКАЗ
+    </a>
+</div>

@@ -1,0 +1,313 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load check_condition %}
+{% block desc %}
+<meta name="description" content="{{product.seo_desc}}">
+{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/slick.css' %}">
+{% endblock %}
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li><a href="{% url 'home' %}"><img src="{% static 'img/home.svg' %}" alt=""></a></li>
+        <li><img src="{% static 'img/left-bread.svg' %}" alt=""></li>
+        <li><a href="{% url 'catalog:index' %}">Каталог</a></li>
+        <li><img src="{% static 'img/left-bread.svg' %}" alt=""></li>
+         {% if product.in_trade %}
+            <li><a href="/catalog/tradeIn">Trade In</a></li>
+            <li><img src="{% static 'img/left-bread.svg' %}" alt=""></li>
+            <li><a href="{% url 'catalog:tradeIn' product.get_category_link  %}">{{product.get_category_name}}</a></li>
+            <li><img src="{% static 'img/left-bread.svg' %}" alt=""></li>
+        {% elif product.get_category_link %}
+            <li><a href="{% url 'catalog:products' product.get_category_link  %}">{{product.get_category_name}}</a></li>
+            <li><img src="{% static 'img/left-bread.svg' %}" alt=""></li>
+            {% if product.get_additional_category_link %}
+                <li><a href="{{product.get_additional_category_link}}">{{product.get_additional_category_name}}</a></li>
+                <li><img src="{% static 'img/left-bread.svg' %}" alt=""></li>
+            {% endif %}
+        {% endif %}
+
+        <li class="active">{{product}}</li>
+    </ul>
+{% endblock breadcrumb %}
+{% block content %}
+    <div class="wrapper">
+        <section class="product-first">
+            <div class="h-100 container d-flex flex-wrap">
+                <div class="col-xl-6 col-12 text-center w-100 my-3 map ">
+                    <div id="productCarousel" class="container position-relative product-img-slider carousel slide px-lg-2 px-0">
+                        <div class="carousel-inner">
+                        </div>
+                        <a class="carousel-control-prev prevProduct prevProductNew" role="button"
+                           data-slide="prev">
+                            <img class="rotate180" src="{% static 'img/right.svg' %}" alt="">
+                        </a>
+                        <a class="carousel-control-next nextProduct nextProductNew" role="button"
+                           data-slide="next">
+                            <img src="{% static 'img/right.svg' %}" alt="">
+                        </a>
+                        <div class="row in d-md-block d-none thumbnail-images">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-12 w-100 mb-5">
+                    <a href="{{previous}}" class="returnBack sf-reg">
+                        <img src="{% static 'img/left.svg' %}" alt="">
+                        Назад
+                    </a>
+                    <input type="hidden" class="product-data" value="{{data}}">
+                    <p class="sf-medium product-title of-ellipsis">{{ product }}</p>
+                    <p class="sf-medium product-category-title mt-4">Цвет</p>
+                    {% with product.specification.all as specifications %}
+                        <div class="compare-color h-auto justify-content-start">
+                                {% for color in specifications|unique_color %}
+                                    <div class="specification-color  mt-2 el change-data"
+                                        data-key="color_hex" data-value="{{ color.id }}"
+                                        data-toggle="tooltip" data-placement="top" title="{{ color.name }}">
+                                        <img src="/media/{{color.img}}" alt="">
+                                    </div>
+                                {% endfor %}
+                        </div>
+                        {% if specifications|unique_capacity %}
+                            <p class="sf-medium product-category-title mt-4 ">Память</p>
+                            <div class="h-auto justify-content-start d-flex flex-wrap product-capacities">
+                                {% for capacity in specifications|unique_capacity %}
+                                        <div class="specification c-point mt-2 change-data"
+                                            data-key="capacity" data-value="{{ capacity.id }}">{{ capacity }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        {% if specifications|unique_keyboard %}
+                            <p class="sf-medium product-category-title mt-4 ">Раскладка клавиатуры</p>
+                            <div class="h-auto justify-content-start d-flex flex-wrap product-capacities">
+                                {% for keyboard in specifications|unique_keyboard %}
+                                    <div class="specification  c-point mt-2 change-data" data-key="keyboard" data-value="{{ keyboard.id }}">
+                                        {{ keyboard }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        {% if specifications|unique_caseSize %}
+                            <p class="sf-medium product-category-title mt-4 ">Размер корпуса</p>
+                            <div class="h-auto justify-content-start d-flex flex-wrap product-capacities">
+                                {% for caseSize in specifications|unique_caseSize %}
+                                    <div class="specification c-point mt-2 change-data" data-key="caseSize" data-value="{{ caseSize.id }}">
+                                        {{ caseSize }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        {% if specifications|unique_connectivity %}
+                            <p class="sf-medium product-category-title mt-4 ">Возможности подключения</p>
+                            <div class="h-auto justify-content-start d-flex flex-wrap product-capacities">
+                                {% for connectivity in specifications|unique_connectivity %}
+                                    <div class="specification c-point mt-2 change-data" data-key="connectivity" data-value="{{ connectivity.id }}">
+                                        {{ connectivity }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        {% if specifications|unique_ram %}
+                            <p class="sf-medium product-category-title mt-4 ">Оперативная память</p>
+                            <div class="h-auto justify-content-start d-flex flex-wrap product-capacities">
+                                {% for ram in specifications|unique_ram %}
+                                    <div class="specification c-point mt-2 change-data" data-key="ram" data-value="{{ ram.id }}">
+                                        {{ ram }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        {% if specifications|unique_cpu %}
+                            <p class="sf-medium product-category-title mt-4 ">Процессор</p>
+                            <div class="h-auto justify-content-start d-flex flex-wrap product-capacities">
+                                {% for cpu in specifications|unique_cpu %}
+                                <div class="specification c-point mt-2 change-data" data-key="cpu" data-value="{{ cpu.id }}">
+                                    {{ cpu }}
+                                </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        {% if specifications|unique_edition %}
+                            <p class="sf-medium product-category-title mt-4 ">Edition</p>
+                            <div class="h-auto justify-content-start d-flex flex-wrap product-capacities">
+                                {% for edition in specifications|unique_edition %}
+                                <div class="specification c-point mt-2 change-data" data-key="edition" data-value="{{ edition.id }}">
+                                    {{ edition }}
+                                </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        {% if specifications|unique_pattern %}
+                            <p class="sf-medium product-category-title mt-4 ">Модель</p>
+                            <div class="h-auto justify-content-start d-flex flex-wrap product-capacities">
+                                {% for pattern in specifications|unique_pattern %}
+                                <div class="specification c-point mt-2 change-data" data-key="pattern" data-value="{{ pattern.id }}">
+                                    {{ pattern }}
+                                </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+                    <div class="col-lg-6 col-12 px-0">
+                        <input type="hidden" class="current-product-price" value="{{price}}">
+                        <input type="hidden" class="current-product-converted" value="{{converted}}">
+                        <input type="hidden" class="colors-name" value="{{ colors|jsonify }}">
+                    </div>
+                    <div class="d-flex flex-wrap">
+                        <div class="col-auto pl-0  mt-4">
+                            <p class="sf-medium  product-price-secondary d-flex"><span class="pr-1">0</span> сом</p>
+                            <p class="sf-reg product-price-main" data-id="{{ product.id }}"> $<span>0</span></p>
+                        </div>
+                        <div class="col-6 px-0  mt-4 d-flex flex-column align-items-start">
+                            <img src="{% static 'img/in-stock.svg' %}" alt="">
+                            <p class="sf-reg empty-text mt-2 text-left product-in-stock">Товар в наличии</p>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-wrap mt-4">
+                        <div class="col-md-3 col-12 pl-0 toBasketParent">
+                            <button class="btn btn-primary w-100 main-btn toBasket" data-id="{{ product.id }}">Купить
+                            </button>
+                        </div>
+                        <div class="col-lg-4 col-12 px-0 align-items-center justify-content-center mt-2 mt-lg-0 createLoanParent">
+                            <a class="link c-point create_loan" data-id="{{ product.id }}">Оформить в кредит</a>
+                        </div>
+                        <div class="col-lg-2 col-12 px-0 d-flex align-items-center mt-2 mt-lg-0">
+                            <a class="link c-point reserve" data-id="{{ product.id }}" data-toggle="modal" data-target="#reserveProduct">Забронировать</a>
+                        </div>
+                    </div>
+                    <p class="sf-medium product-category-title mt-4">Основные характеристики </p>
+                    <div class="d-flex flex-wrap mt-4">
+                        {% for index,specific in product.get_main_specific %}
+                            <div class="col-md-6 col-12 pl-0 mb-3">
+                                <img class="main-spec-img" src="/media/{{ specific.0 }}" alt="">
+                                <p class="sf-reg main-spec-desc mt-1">{{ specific.1|safe }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-12 px-0">
+                    <ul class="nav nav-pills mb-3 product-nav" id="pills-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link link bg-none active" id="desc-tab" data-toggle="pill"
+                               href="#desc"
+                               role="tab" aria-controls="desc" aria-selected="true">Описание</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link link bg-none" id="specification-tab" data-toggle="pill"
+                               href="#specification"
+                               role="tab" aria-controls="specification" aria-selected="false">Характеристики</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content my-5" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="desc" role="tabpanel"
+                             aria-labelledby="nav-home-tab">
+                            {% if product.description %}
+                                {{ product.description|safe }}
+                            {% endif %}
+                        </div>
+                        <div class="tab-pane fade my-5" id="specification" role="tabpanel"
+                             aria-labelledby="nav-profile-tab">
+                            <div class="d-flex flex-wrap mb-4">
+                                <div class="col-md-3 col-12 ml-auto pl-0">
+                                    <p class="sf-medium specific-title">Цвет</p>
+                                </div>
+                                <div class="col-md-8 col-12 bb-grey pl-0">
+                                    <p class="sf-reg specific-desc">
+                                        {% for index, color in product.get_colors %}
+                                            {% if index %}
+                                                ,
+                                            {% endif %}
+                                            {{ color }}
+                                        {% endfor %}
+                                    </p>
+                                </div>
+                            </div>
+                            {% if specification|hasnt_none_val %}
+
+                                <div class="d-flex flex-wrap mb-4">
+                                    <div class="col-md-3 col-12 ml-auto pl-0">
+                                        <p class="sf-medium specific-title">Ёмкость</p>
+                                    </div>
+                                    <div class="col-md-8 col-12 bb-grey pl-0">
+                                        <p class="sf-reg specific-desc">
+                                            {% for index, capacity in product.get_capacities %}
+                                                {% if index %}
+                                                    ,
+                                                {% endif %}
+                                                {{ capacity }}
+                                            {% endfor %}
+                                        </p>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% for index,additional_specific in product.get_additional_specific %}
+                                <div class="d-flex flex-wrap mb-4">
+                                    <div class="col-md-3 col-12 ml-auto pl-0">
+                                        <p class="sf-medium specific-title">{{ additional_specific.specification }}</p>
+                                    </div>
+                                    <div class="col-md-8 col-12 bb-grey pl-0">
+                                        <p class="sf-reg specific-desc">
+                                            {{ additional_specific.description|safe }}
+                                        </p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% if product.get_recommends_custom|check_condition %}
+                    <div class="col-12 my-5 d-flex flex-wrap">
+                        <div class="col-12 px-0">
+                            <h3 class="sf-sem bought-with">С этим товаром покупают</h3>
+                        </div>
+                        {% for index,recommend in product.get_recommends_custom %}
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-12 mt-lg-4 mt-2 recommend-card-product">
+                                <a href="{% url 'catalog:product' recommend.id %}">
+                                    <img src="{{ recommend.get_image }}" class="card-img-top" alt="...">
+                                </a>
+                                <div class="card-body bg-none text-center">
+                                    <h5 class="card-title mt-2 of-ellipsis">{{ recommend.product_title }}</h5>
+                                    <p class="card-price-rub mb-1">{{ recommend.calc_som_currency_min }} сом</p>
+                                    <p class="card-price-usd my-1">${{ recommend.min_price }}</p>
+                                    <a class="link" href="{% url 'catalog:product' recommend.id %}">
+                                        <img src="{% static '/img/bag.svg' %}" alt="">
+                                        выбрать
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+    </div>
+    <!-- {% include 'modals/image_preview.html' %} -->
+    <div id="imagePreviewModal" class="product-img-slider carousel slide">
+        <span class="close-preview">
+            <img src="{% static 'img/x-circle.svg' %}" alt="">
+        </span>
+        <div class="carousel">
+            <div class="carousel-inner">
+                {% for index, image in images|get_enumerated %}
+                <div class="productSlide carousel-item">
+                    <img src="{{ image }}">
+                </div>
+                {% endfor %}
+            </div>
+            <a class="carousel-control-prev prevProduct" href="#imagePreviewModal" role="button" data-slide="prev">
+                <img class="rotate180" src="{% static 'img/right.svg' %}" alt="">
+            </a>
+            <a class="carousel-control-next nextProduct" href="#imagePreviewModal" style="border:1px solid red;" role="button" data-slide="next">
+                <img src="{% static 'img/right.svg' %}" alt="">
+            </a>
+        </div>
+    </div>
+
+{% endblock %}
+{% block modals %}
+    {% include 'modals/reserve_product.html' %}
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'js/product.js' %}" defer></script>
+    <script src="{% static 'js/slick.min.js' %}" defer></script>
+{% endblock %}

@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+      <li><a href="{% url 'home' %}"><img src="{% static 'img/home.svg' %}" alt=""></a></li>
+      <li><img src="{% static 'img/left-bread.svg' %}" alt=""></li>
+      <li class="active">Контакты</li>
+    </ul>
+{% endblock breadcrumb %}
+
+{% block content %}
+    <div class="wrapper">
+        <section class="contacts-us-first">
+            <div class="h-100 container d-flex flex-wrap">
+                <div class="col-xl-6 col-12 text-center w-100 my-5 map">
+                    <a class="dg-widget-link"
+                       href="http://2gis.kg/bishkek/firm/70000001020196124/center/74.58800554275514,42.876247147981104/zoom/16?utm_medium=widget-source&utm_campaign=firmsonmap&utm_source=bigMap">Посмотреть
+                        на карте Бишкека</a>
+                    <div class="dg-widget-link"><a
+                            href="http://2gis.kg/bishkek/firm/70000001020196124/photos/70000001020196124/center/74.58800554275514,42.876247147981104/zoom/17?utm_medium=widget-source&utm_campaign=firmsonmap&utm_source=photos">Фотографии
+                        компании</a></div>
+                    <div class="dg-widget-link"><a
+                            href="http://2gis.kg/bishkek/center/74.588009,42.875669/zoom/16/routeTab/rsType/bus/to/74.588009,42.875669╎iStore, магазин?utm_medium=widget-source&utm_campaign=firmsonmap&utm_source=route">Найти
+                        проезд до iStore, магазин</a></div>
+                    <script charset="utf-8" src="https://widgets.2gis.com/js/DGWidgetLoader.js"></script>
+                    <script charset="utf-8">new DGWidgetLoader({
+                        "width": 640,
+                        "height": 600,
+                        "borderColor": "#a3a3a3",
+                        "pos": {"lat": 42.876247147981104, "lon": 74.58800554275514, "zoom": 16},
+                        "opt": {"city": "bishkek"},
+                        "org": [{"id": "70000001020196124"}]
+                    });</script>
+                    <noscript style="color:#c00;font-size:16px;font-weight:bold;">Виджет карты использует JavaScript.
+                        Включите его в настройках вашего браузера.
+                    </noscript>
+                </div>
+                <div class="col-xl-6 col-12 text-center w-100 my-5">
+                    <div class="d-flex flex-wrap">
+                        <div class="col-lg-6 col-12 text-left">
+                            <h3 class="sf-sem main-title mb-5">{{contacts.title}}</h3>
+                        </div>
+                        <div class="col-lg-6 col-12 pt-2 text-left">
+                            <h3 class="sf-light main-little-description">
+                                {{contacts.desc}}
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-wrap contacts">
+                        <div class="col-lg-6 col-12 text-left">
+                            <p class="sf-medium callback-header mb-4">
+                                {{contacts.contact}}
+                            </p>
+                            <div class="d-flex">
+                                <img src="{% static '/img/phone.svg' %}" alt="">
+                                <p class="sf-medium callback-title ml-2">
+                                    {{contacts.phone}}
+                                </p>
+                            </div>
+                            <p class="sf-light callback-desc">
+                                {{settings.contact_first}} <br> {{settings.contact_second}}
+                            </p>
+                            <p class="sf-light footer-text"> <br> </p>
+                            <div class="d-flex mt-4">
+                                <img src="{% static '/img/mail.svg' %}" alt="">
+                                <p class="sf-medium  callback-title ml-2">
+                                    {{contacts.email}}
+                                </p>
+                            </div>
+                            <a href = "mailto: {{settings.email}}" class="sf-light callback-desc">
+                                {{settings.email}}
+                            </a>
+                            <div class="d-flex mt-4">
+                                <img src="{% static '/img/time-five.svg' %}" alt="">
+                                <p class="sf-medium callback-title ml-2">
+                                    {{contacts.schedule}}
+                                </p>
+                            </div>
+                            <p class="sf-light callback-desc  mt-2">
+                                {{settings.schedule}}
+                            </p>
+                            <p class="sf-medium callback-title mt-4">
+                                {{contacts.socials}}
+                            </p>
+                            <div class="d-flex mt-2">
+                                <a href="{{settings.facebook}}"><img src="{% static '/img/facebook.svg' %}" alt=""></a>
+                                <a href="{{settings.instagram}}"><img src="{% static '/img/instagram.svg' %}" alt=""></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-12 text-left">
+                            <p class="sf-medium callback-header mb-4">
+                                {{contacts.form}}
+                            </p>
+                            <input type="text" class="form-control callBack-name" placeholder="Ваше имя"
+                                   value="{{ user.name|default:'' }}">
+                            <input type="number" class="form-control callBack-phone" placeholder="Укажите свой номер" value="{{ user.phone }}">
+                            <input type="text" class="form-control callBack-topic" placeholder="Тема обращения">
+                            <textarea class="form-control callBack-desc" name="" rows="3"
+                                      placeholder="Ваше сообщение"></textarea>
+                            <div class="form-group mb-2 d-flex justify-content-start align-items-center callBack-checkbox">
+                                <label class="mb-0 mt-3" style="font-size: 11px;" for="online-service">
+                                    <input type="checkbox" class="mr-2 checkbox-custom"
+                                           style="width:13px!important;height:13px!important;border-radius:0px; background-color:#C4C4C4;"
+                                    >
+                                    <a href="{% url 'agreement' %}" target="_blank">Я принимаю
+                                        условия
+                                        пользовательского соглашения</a>
+                                </label>
+                            </div>
+                            <button class="btn btn-primary w-100 callBack waves-effect waves-light" type="submit">
+                                Отправить
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+{% endblock %}

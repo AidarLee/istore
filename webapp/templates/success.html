@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load make_range %}
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+      <li><a href="{% url 'home' %}"><img src="{% static 'img/home.svg' %}" alt=""></a></li>
+      <li><img src="{% static 'img/left-bread.svg' %}" alt=""></li>
+      <li class="active">Покупка в кредит</li>
+    </ul>
+{% endblock breadcrumb %}
+{% block content %}
+<div class="wrapper">
+    <section class="loan-first">
+        <div class="h-100 container d-flex flex-wrap">
+            <div class="text-center w-100 my-5">
+                <img src="{% static 'img/green-mark.svg' %}" alt="">
+                <h3 class="sf-sem main-title">Спасибо!</h3>
+                <h3 class="sf-sem main-little-description">
+                    Ваша заявка успешно отправлена.
+                    <br>
+                    Мы свяжемся с вами в ближайщее время
+                </h3>
+                <a class="btn btn-primary sf-medium success-btn" href="{% url 'home' %}">Вернуться в магазин</a>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

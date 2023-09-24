@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+      <li><a href="{% url 'home' %}"><img src="{% static 'img/home.svg' %}" alt=""></a></li>
+      <li><img src="{% static 'img/left-bread.svg' %}" alt=""></li>
+      <li class="active">Каталог</li>
+    </ul>
+{% endblock breadcrumb %}
+{% block content %}
+    <div class="wrapper">
+        <section class="catalog-first">
+            <div class="h-100 container d-flex flex-wrap">
+                <div class="text-center w-100 my-lg-5 mt-2 mb-4">
+                    <h3 class="sf-sem main-title mb-0">Каталог</h3>
+                </div>
+            </div>
+        </section>
+        <section class="catalog-second container">
+            <div class="d-flex flex-wrap mb-10">
+                <div class="col-lg-4 col-md-6 col-12 px-1 mb-2">
+                    <div class="catalog-card">
+                        <img src="/media/{{category_images.mac}}" alt="">
+                        <div class="d-flex flex-wrap justify-content-between">
+                            <p class="sf-sem catalog-name">{{category_images.mac_title}}</p>
+                            <a href="{% url 'catalog:products' 'macBook' %}" class="link">
+                                перейти
+                                <img src="{% static '/img/right-arr.svg' %}" alt="">
+                            </a>
+                        </div>
+                        <a class="ml-2 link-to-product" href="{% url 'catalog:products' 'macBook' %}">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12 px-1 mb-2">
+                    <div class="catalog-card">
+                        <img src="/media/{{category_images.iphone}}" alt="">
+                        <div class="d-flex flex-wrap justify-content-between">
+                            <p class="sf-sem catalog-name">{{category_images.iphone_title}}</p>
+                            <a href="{% url 'catalog:products' 'iphone' %}" class="link">
+                                перейти
+                                <img src="{% static '/img/right-arr.svg' %}" alt="">
+                            </a>
+                        </div>
+                        <a class="ml-2 link-to-product" href="{% url 'catalog:products' 'iphone' %}">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12 px-1 mb-2">
+                    <div class="catalog-card">
+                        <img src="/media/{{category_images.ipad}}" alt="">
+                        <div class="d-flex flex-wrap justify-content-between">
+                            <p class="sf-sem catalog-name">{{category_images.ipad_title}}</p>
+                            <a href="{% url 'catalog:products' 'iPad' %}" class="link">
+                                перейти
+                                <img src="{% static '/img/right-arr.svg' %}" alt="">
+                            </a>
+                        </div>
+                        <a class="ml-2 link-to-product" href="{% url 'catalog:products' 'iPad' %}">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12 px-1 mb-2">
+                    <div class="catalog-card">
+                        <img src="/media/{{category_images.watch}}" alt="">
+                        <div class="d-flex flex-wrap justify-content-between">
+                            <p class="sf-sem catalog-name">{{category_images.watch_title}}</p>
+                            <a href="{% url 'catalog:products' 'apple-watch' %}" class="link">
+                                перейти
+                                <img src="{% static '/img/right-arr.svg' %}" alt="">
+                            </a>
+                        </div>
+                        <a class="ml-2 link-to-product" href="{% url 'catalog:products' 'apple-watch' %}">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12 px-1 mb-2">
+                    <div class="catalog-card">
+                        <img src="/media/{{category_images.accessory}}" alt="">
+                        <div class="d-flex flex-wrap justify-content-between">
+                            <p class="sf-sem catalog-name">{{category_images.accessory_title}}</p>
+                            <a href="{% url 'catalog:products' 'accessory' %}" class="link">
+                                перейти
+                                <img src="{% static '/img/right-arr.svg' %}" alt="">
+                            </a>
+                        </div>
+                        <a class="ml-2 link-to-product" href="{% url 'catalog:products' 'accessory' %}">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12 px-1 mb-2">
+                    <div class="catalog-card">
+                        <img src="/media/{{category_images.gadget}}" alt="">
+                        <div class="d-flex flex-wrap justify-content-between mt-auto">
+                            <p class="sf-sem catalog-name">{{category_images.gadget_title}}</p>
+                            <a href="{% url 'catalog:products' 'gadgets' %}" class="link">
+                                перейти
+                                <img src="{% static '/img/right-arr.svg' %}" alt="">
+                            </a>
+                        </div>
+                        <a class="ml-2 link-to-product" href="{% url 'catalog:products' 'gadgets' %}">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+{% endblock %}

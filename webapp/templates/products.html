@@ -1,0 +1,324 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load get_color_name %}
+{% block breadcrumb %}
+<ul class="breadcrumb pl-0">
+    <li><a href="{% url 'home' %}"><img src="{% static 'img/home.svg' %}" alt=""></a></li>
+    <li><img src="{% static 'img/left-bread.svg' %}" alt=""></li>
+    <li><a href="{% url 'catalog:index' %}">Каталог</a></li>
+    {% if additional %}
+        <li><img src="{% static 'img/left-bread.svg' %}" alt=""></li>
+        <li><a href="{{ additional.link }}">{{additional.name}}</a></li>
+    {% endif %}
+    <li><img src="{% static 'img/left-bread.svg' %}" alt=""></li>
+    <li class="active">{{category_name|get_category_name:category_images}}</li>
+</ul>
+{% endblock breadcrumb %}
+{% block content %}
+<div class="wrapper">
+    <section class="products-first">
+        <div class="h-100 container">
+            {% if category == 'tradeIn' %}
+                <div class="d-flex flex-wrap">
+                    <div class="col-lg-6 col-12">
+                        <div class="w-100 mt-2">
+                            <h3 class="sf-sem main-secondary-title">О программе Trade-in</h3>
+                            <h4 class="sf-light main-little-description">
+                                Моментальная и удобная схема обмена устройств. Всего три простых шага!
+                            </h4>
+                        </div>
+                        <div class="d-flex flex-wrap">
+                            <div class="col-12 text-center mt-2 b-grey position-relative h-210px">
+                                <img src="{% static 'img/trade-in-first.svg' %}" alt="">
+                                <p class="sf-reg trade-in-text">
+                                    Принесите свой iPhone, <br>  MacBook, iPad или Apple Watch
+                                </p>
+                                <a class="ml-2 tradein-link" href="{% url 'tradeIn' '1' %}">
+                                </a>
+                            </div>
+                            <div class="col-12 text-center mt-2 b-grey position-relative h-210px">
+                                <img src="{% static 'img/trade-in-second.svg' %}" alt="">
+                                <p class="sf-reg trade-in-text">
+                                    Отдайте устройство на мгновенную <br> диагностику и узнайте сумму скидки
+                                </p>
+                                <a class="ml-2 tradein-link" href="{% url 'tradeIn' '2' %}">
+                                </a>
+                            </div>
+                            <div class="col-12 text-center mt-2 b-grey position-relative h-210px">
+                                <img src="{% static 'img/trade-in-third.svg' %}" alt="">
+                                <p class="sf-reg trade-in-text">
+                                    Используйте данную скидку <br>
+                                    при покупке нового устройства
+                                </p>
+                                <a class="ml-2 tradein-link" href="{% url 'tradeIn' '3' %}">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-12">
+                        <div class="w-100 mt-2">
+                            <h3 class="sf-medium in-catalog-title" style="height:33px;">
+                                Каталог Trade-in
+                            </h3>
+                            <h4 class="sf-light main-little-description" style="height:50px;">
+                                Такой же, но дешевле!
+                            </h4>
+                        </div>
+                        <div class="d-flex flex-wrap mb-10 w-100 additional-category-container tradeIn">
+                            <div class="col-md-6 col-12 px-1 mb-2 card mt-2">
+                                <div class="additional-category-card">
+                                    <img src="/media/{{category_images.trade_iphone}}" alt="">
+                                    <p class="sf-reg additional-category-name">{{category_images.trade_iphone_title}}</p>
+                                </div>
+                                <a href="{% url 'catalog:tradeIn' 'iphone' %}"></a>
+                            </div>
+                            <div class="col-md-6 col-12 px-1 mb-2 card mt-2">
+                                <div class="additional-category-card">
+                                    <img src="/media/{{category_images.trade_ipad}}" alt="">
+                                    <p class="sf-reg additional-category-name">{{category_images.trade_ipad_title}}</p>
+                                </div>
+                                <a href="{% url 'catalog:tradeIn' 'iPad' %}"></a>
+                            </div>
+                            <div class="col-md-6 col-12 px-1 mb-2 card">
+                                <div class="additional-category-card">
+                                    <img src="/media/{{category_images.trade_mac}}" alt="">
+                                    <p class="sf-reg additional-category-name">{{category_images.trade_mac_title}}</p>
+                                </div>
+                                <a href="{% url 'catalog:tradeIn' 'macBook' %}"></a>
+                            </div>
+                            <div class="col-md-6 col-12 px-1 mb-2 card">
+                                <div class="additional-category-card">
+                                    <img src="/media/{{category_images.trade_watch}}" alt="">
+                                    <p class="sf-reg additional-category-name">{{category_images.trade_watch_title}}</p>
+                                </div>
+                                <a href="{% url 'catalog:tradeIn' 'apple-watch' %}"></a>
+                            </div>
+                            <div class="col-12 px-1 mb-2 card">
+                                <div class="additional-category-card">
+                                    <img src="/media/{{category_images.trade_another}}" alt="">
+                                    <p class="sf-reg additional-category-name">{{category_images.trade_another_title}}</p>
+                                </div>
+                                <a href="{% url 'catalog:tradeIn' 'another' %}"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="text-left col-12 pt-0 d-flex flex-wrap justify-content-between pl-0">
+                    <div class="d-flex flex-wrap justify-content-between w-100">
+                        <h4 class="sf-medium in-catalog-title">
+                            {{category_name|get_category_name:category_images}}
+                        </h4>
+                        {% if additional and additional.name == "Trade In" %}
+                            <a class="tradeInLink" href="{% url 'catalog:products' 'tradeIn' %}">
+                                <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M7.5 11.25C7.84518 11.25 8.125 10.9702 8.125 10.625C8.125 10.2798 7.84518 10 7.5 10C7.15482 10 6.875 10.2798 6.875 10.625C6.875 10.9702 7.15482 11.25 7.5 11.25Z"
+                                        fill="#1D1D1F" />
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M7.72087 5.34991C7.41738 5.36323 7.25555 5.48533 7.19953 5.60436C7.05254 5.91668 6.68019 6.0507 6.36788 5.90371C6.05556 5.75672 5.92154 5.38438 6.06853 5.07206C6.39489 4.37862 7.09798 4.12604 7.66606 4.10111C8.21251 4.07713 8.89256 4.25118 9.26878 4.74179C9.55829 5.11932 9.72094 5.59788 9.65526 6.10107C9.58866 6.61129 9.29763 7.06897 8.82541 7.41636C8.19483 7.88026 8.19594 8.11696 8.19611 8.15142C8.19611 8.15192 8.19611 8.15238 8.19611 8.1528C8.19611 8.49798 7.91629 8.7778 7.57111 8.7778C7.22593 8.7778 6.94611 8.49798 6.94611 8.1528C6.94611 7.55485 7.29391 6.99122 8.08468 6.40948C8.32774 6.23067 8.40007 6.05958 8.41577 5.93927C8.4324 5.81193 8.3963 5.65819 8.27686 5.50244C8.26846 5.49149 8.22281 5.4459 8.10851 5.40482C7.99937 5.3656 7.86214 5.34371 7.72087 5.34991Z"
+                                        fill="#1D1D1F" />
+                                    <path
+                                        d="M7.5 14.375C3.6875 14.375 0.625 11.3125 0.625 7.5C0.625 3.6875 3.6875 0.625 7.5 0.625C11.3125 0.625 14.375 3.6875 14.375 7.5C14.375 11.3125 11.3125 14.375 7.5 14.375ZM7.5 1.875C4.375 1.875 1.875 4.375 1.875 7.5C1.875 10.625 4.375 13.125 7.5 13.125C10.625 13.125 13.125 10.625 13.125 7.5C13.125 4.375 10.625 1.875 7.5 1.875Z"
+                                        fill="#1D1D1F" />
+                                </svg>
+                                <span class="mb-0">Что такое Trade In?</span>   
+                            </a>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="align-items-center d-none">
+                        <p class="sf-reg sort-text mr-2">
+                            Сортировать
+                        </p>
+                        <select name="" id="" class="sort-from-catalog o-none c-point" data-by="{{ category }}">
+                            <option value="">по популярности</option>
+                            <option value="">по новым</option>
+                            <option value="">по старым</option>
+                            <option value="">по бюджетным</option>
+                            <option value="">по дорогим</option>
+                        </select>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+    <section class="products-second mb-5">
+        <div class="h-100 container d-flex flex-wrap products-content">
+            {% for product in products %}
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mt-lg-4 mt-2 recommend-card d-flex flex-column p-4">
+                    <a href="{% url 'catalog:product' product.get_url_name %}" class="href {% if 'mac' in  category %} max-height-245 {% endif %}">
+                        {% if 'mac' in  category or 'Mac' == additional.name  or  'iMac' in category %}
+                            {% with product.get_images_with_colors.0 as image %}
+                                <img src="{{ image.1 }}" class="card-img-top" alt="...">
+                            {% endwith %}
+                        {% else %}
+                            <img src="{{ product.get_image }}" class="card-img-top" alt="...">
+                        {% endif %}
+                    </a>
+                    <div class="card-body bg-none text-center h-auto">
+                        {% if 'mac' in  category or 'Mac' == additional.name or 'iMac' in category %}
+                            <div class="compare-color mb-2" style="flex:none;">
+                                {% for i in product.get_images_with_colors_unique %}
+                                    <div class="color in_products mt-2 {% if forloop.first %} active {% endif %}" data-img="{{i.1}}"
+                                         data-color="{{ i.0 }}"  data-toggle="tooltip" data-placement="top"
+                                         title="{{ i.0|get_color_name }}">
+                                        <img src="/media/{{i.0.img}}" alt="">
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <a href="{% url 'catalog:product' product.get_url_name %}" class="href">
+                            <h5 class="card-title mt-2 of-2-ellipsis pr-0">{{ product }}</h5>
+                        </a>
+                        {% if 'mac' in  category or 'Mac' == additional.name or 'iMac' in category %}
+                            {% if product.desc %}
+                                <div class="short-description">
+                                    {{ product.desc|safe }}
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                        <p class="card-price-rub mb-1 mt-auto">
+                            от
+                            {{ product.calc_som_currency_min }} сом
+                        </p>
+                        <p class="card-price-usd my-1"> ${{ product.min_price }}</p>
+                        <a class="link" href="{% url 'catalog:product' product.get_url_name %}">
+                            <img src="{% static '/img/bag.svg' %}" alt="">
+                                выбрать
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+
+            {% if category == 'accessory' %}
+                <div class="d-flex flex-wrap mb-10 w-100 additional-category-container">
+                    {% for category in accessory_category %}
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-12 px-1 mb-2 card">
+                        <div class="additional-category-card">
+                            <img src="/media/{{category.image}}" alt="">
+                            <p class="sf-reg additional-category-name">{{category.name}}</p>
+                        </div>
+                        <a href="{% url 'catalog:accessory' category.slug_name %}"></a>
+                    </div>
+                    {% empty %}
+                        <div class="w-100 d-flex justify-content-center">
+                            <div class="empty-card bg-none text-center mt-5">
+                                <img src="{% static '/img/empty-box.svg' %}" class="empty-img" alt="...">
+                                <p class="sf-medium empty-products">
+                                    В этой категории <br> нет товаров
+                                </p>
+                                <a href="{{previous}}" class="return-back">
+                                    Вернуться назад
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% elif category == 'gadgets' %}
+                <div class="d-flex flex-wrap mb-10 w-100 additional-category-container">
+                    {% for category in gadget_category %}
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-12 px-1 mb-2 card">
+                            <div class="additional-category-card">
+                                <img src="/media/{{category.image}}" alt="">
+                                <p class="sf-reg additional-category-name">{{category.name}}</p>
+                            </div>
+                            <a href="{% url 'catalog:gadgets' category.slug_name %}"></a>
+                        </div>
+                    {% empty %}
+                        <div class="w-100 d-flex justify-content-center">
+                            <div class="empty-card bg-none text-center mt-5">
+                                <img src="{% static '/img/empty-box.svg' %}" class="empty-img" alt="...">
+                                <p class="sf-medium empty-products">
+                                    В этой категории <br> нет товаров
+                                </p>
+                                <a href="{{previous}}" class="return-back">
+                                    Вернуться назад
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% elif category == 'macBook' %}
+                {% if additional.name != 'Trade In' %}
+                    <div class="d-flex flex-wrap mb-10 w-100 additional-category-container">
+                        {% for category in mac_category %}
+                            <div class="col-xl-3 col-lg-4 col-md-6 col-12 px-1 mb-2 card">
+                                <div class="additional-category-card">
+                                    <img src="/media/{{category.image}}" alt="">
+                                    <p class="sf-reg additional-category-name">{{category.name}}</p>
+                                </div>
+                                <a href="{% url 'catalog:mac' category.slug_name %}"></a>
+                            </div>
+                        {% empty %}
+                            <div class="w-100 d-flex justify-content-center">
+                                <div class="empty-card bg-none text-center mt-5">
+                                    <img src="{% static '/img/empty-box.svg' %}" class="empty-img" alt="...">
+                                    <p class="sf-medium empty-products">
+                                        В этой категории <br> нет товаров
+                                    </p>
+                                    <a href="{{previous}}" class="return-back">
+                                        Вернуться назад
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% elif category == 'tradeIn' %}
+
+            {% elif not tradeIn and not products %}
+                <div class="w-100 d-flex justify-content-center">
+                    <div class="empty-card bg-none text-center mt-5">
+                        <img src="{% static '/img/empty-box.svg' %}" class="empty-img" alt="...">
+                        <p class="sf-medium empty-products">
+                            В этой категории <br> нет товаров
+                        </p>
+                        <a href="{{previous}}" class="return-back">
+                            Вернуться назад
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+            {% if tradeIn %}
+                <div class="col-12 px-0 bt-grey">
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mt-lg-4 mt-2 recommend-card d-flex flex-column p-4">
+                        <a href="{% url 'catalog:tradeIn' tradeInLink %}" class="href">
+                            {% if 'mac' in category or 'iMac' in category %}
+                                <img src="/media/{{category_images.trade_mac}}" class="card-img-top" alt="...">
+                            {% elif category == 'iphone' %}
+                                <img src="/media/{{category_images.trade_iphone}}" class="card-img-top" alt="...">
+                            {% elif category == 'iPad' %}
+                                <img src="/media/{{category_images.trade_ipad}}" class="card-img-top" alt="...">
+                            {% elif category == 'apple-watch' %}
+                                <img src="/media/{{category_images.trade_watch}}" class="card-img-top" alt="...">
+                            {% else %}
+                                <img src="/media/{{category_images.trade_another}}" class="card-img-top" alt="...">
+                            {% endif %}
+                        </a>
+                        <div class="card-body bg-none text-center">
+                            <a href="{% url 'catalog:tradeIn' tradeInLink %}" class="href">
+                                <h5 class="card-title mt-2 of-ellipsis pr-0">Trade In - {{category_name}}</h5>
+                                <p>{{tradeIn.category_title}}</p>
+                            </a>
+                            <p class="card-price-rub mb-1">от {{ tradeIn.calc_som_currency_min }} сом</p>
+                            <p class="card-price-usd my-1">${{ tradeIn.min_price }}</p>
+                            <a class="link" href="{% url 'catalog:tradeIn' tradeInLink %}">
+                                Подробнее
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+</div>
+{% endblock %}
+{% block scripts %}
+    <script defer>
+        $(function () {
+          $('.color').tooltip()
+        })
+    </script>
+{% endblock %}

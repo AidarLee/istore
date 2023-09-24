@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="google-site-verification" content="KYtzCE5FZoTb1RZh_6abOaRKncZcUC5EII2NvzLfEyY" />
+        <title>{{settings.title}}</title>
+        <link rel="icon" type="image/jpeg" href="{% static '_image/istore_favicon.jpeg' %}">
+        {% block desc %}<meta name="description" content="{{settings.description}}">{% endblock %}
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" async media="all">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}?v={{ css }}"  async media="all">
+        {% block styles %}{% endblock %}
+    </head>
+    <body>
+        <!-- <div class="preloader" style="background: white;">
+            <div class="preloader__row">
+                <div class="preloader__item">
+                    <img src="{% static '_image/apple01.svg' %}">
+                </div>
+                <div class="loaderqw">
+                </div>
+            </div>
+        </div> -->
+        <div class="main-wrapper">
+            <input type="hidden" name="csrf" value="{{csrf_token}}">
+            <div class="overlay-wrapper"></div>
+            {% include 'partials/header.html' %}
+            <div id="app">
+                <div class="container">
+                    <div class="col-12 pl-0">
+                        {% block breadcrumb %}{% endblock breadcrumb %}
+                    </div>
+                </div>
+                {% block content %}{% endblock %}
+            </div>
+            {% include 'partials/footer.html' %}
+            {% include 'modals/view_catalog.html' %}
+            {% include 'modals/notify_show.html' %}
+            {% include 'modals/forget_password.html' %}
+            {% block modals %}{% endblock %}
+        </div>
+        {% block dependence %}{% endblock %}
+        <script src="{% static 'js/popper.min.js' %}"  defer></script>
+        <script src="{% static 'js/app.js' %}"  defer></script>
+        <script src="{% static 'js/jquery.js' %}"  defer> </script>
+        <script src="{% static 'js/bootstrap.js' %}"  defer></script>
+        <script src="{% static 'js/axios.min.js' %}"  defer></script>
+        <script src="{% static 'js/slick.min.js' %}" defer></script>
+        <script src="{% static 'js/main.js' %}?v={{ js }}"  defer></script>
+        <script src="{% static 'js/lazysizes.min.js' %}"  async></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-222164853-1"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-222164853-1');
+        </script>
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-JS2CFDPV9Y"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-JS2CFDPV9Y');
+        </script>
+
+        <!-- <script src="//code.jivosite.com/widget/Dj8JPnwdXL" defer></script> -->
+        {% block scripts %}{% endblock %}
+    </body>
+</html>

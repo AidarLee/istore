@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% load static %}
+    <div class="wrapper">
+        <section class="basket-first">
+            <div class="h-100 container d-flex flex-wrap">
+                {% if products_in_basket %}
+                    <div class="text-center w-100 mt-5">
+                        <h3 class="sf-sem main-title">Корзина</h3>
+                        <h4 class="sf-light main-little-description">
+                            Товары в вашей корзине
+                        </h4>
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+        {% if products_in_basket %}
+            <section class="basket-first d-none">
+        {% else %}
+            <section class="basket-first">
+        {% endif %}
+        <div class="h-100 container d-flex flex-wrap justify-content-center empty">
+            <div class="col-lg-2 col-sm-5 col-7 mt-5 text-center">
+                <img src="{% static '/img/empty.svg' %}" alt="" style="width:98px;height:98px;">
+            </div>
+            <div class="text-center w-100">
+
+                <h3 class="sf-sem main-title">Ваша корзина пуста</h3>
+                <h4 class="sf-light main-little-description">
+                    Самое время добавить в нее что-нибудь
+                </h4>
+            </div>
+            <div class="col-lg-4 col-sm-5 col-7  mb-5">
+                <a class="btn btn-primary basket-btn w-100 waves-effect waves-light" href="{% url 'catalog:index' %}">
+                    Перейти в каталог
+                </a>
+            </div>
+        </div>
+        </section>
+        {% if products_in_basket %}
+            <section class="basket-second">
+        {% else %}
+            <section class="basket-second d-none">
+        {% endif %}
+        <div class="h-100 container d-flex flex-wrap justify-content-center">
+            <div class="col-lg-11 col-12 products-container">
+                <div class="products-main-title bb-grey d-md-flex d-none flex-wrap justify-content-center w-100 mb-2">
+                    <div class="col-4 pl-0">
+                        <p class="sf-reg">Продукт</p>
+                    </div>
+                    <div class="col-2">
+                        <p class="sf-reg">Количество</p>
+                    </div>
+                    <div class="col-2">
+                        <p class="sf-reg">Комментарий</p>
+                    </div>
+                    <div class="col-2">
+                        <p class="sf-reg">Цена</p>
+                    </div>
+                    <div class="col-2 pr-0">
+                        <p class="sf-reg">К оплате</p>
+                    </div>
+                </div>
+                {% for products in products_in_basket %}
+                    <div class="product-in-basket bb-grey d-flex flex-wrap justify-content-center w-100 my-lg-2 my-4 product-{{ products.id }}">
+                        <div class="col-md-4 col-12 pl-0 d-flex align-items-center flex-wrap">
+                            <div class="col-md-3 col-12 text-center">
+                                <img src="{{ products.get_product_image }}" alt="" class="product-img">
+                            </div>
+                            <div class="col-md-9 col-12 mt-md-0 mt-4 text-center">
+                                <p class="sf-reg ml-2 of-2-ellipsis">{{ products.get_product_title }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-4 mt-md-0 mt-2 d-md-flex d-block align-items-center">
+                            <p class="sf-reg d-md-none d-block title changeInBasket">Количество</p>
+                            <input type="number" class="form-control mt-0 min-zero-val quantity changeInBasket"
+                                   data-unique="{{ products.id }}" value="{{ products.quantity }}" data-max="100">
+                        </div>
+                        <div class="col-md-2 col-8 mt-md-0 mt-2 d-md-flex d-block align-items-center">
+                            <p class="sf-reg d-md-none d-block title comment"
+                               >Комментарий</p>
+                            <input type="text" class="form-control mt-0 comment changeInBasket" data-unique="{{ products.id }}" value="{{ products.comment|default:'' }}">
+                        </div>
+                        <div class="col-md-2 col-5 mt-md-0 mt-2 d-flex flex-column justify-content-center">
+                            <p class="sf-reg d-md-none d-block title">Цена</p>
+                            <p class="sf-medium usd-price w-100">
+                                 $
+                                <span class="start-price">{{ products.get_product_price }}</span>
+                            </p>
+                            <p class="sf-light rub-price">
+                                <span class="start-converted-price">{{ products.get_product_converted_price }}</span>
+                                сом
+                            </p>
+                        </div>
+                        <div class="col-md-2 col-7 mt-md-0 mt-2 d-flex align-items-center pr-0">
+                            <div>
+                                <p class="sf-reg d-md-none d-block title">К оплате</p>
+                                <p class="sf-medium usd-price">
+                                    $
+                                    <span class="final-price">{% widthratio products.get_product_price 1 products.quantity %}</span>
+                                </p>
+                                <p class="sf-light rub-price">
+                                    <span class="converted-price">{% widthratio products.get_product_converted_price 1 products.quantity %}</span>
+                                    сом</p>
+                            </div>
+                            <div class="d-flex align-items-center ml-auto mr-4">
+                                <a class="c-point delete-from-basket" data-id="{{ products.get_product_id }}"
+                                   data-unique="{{ products.id }}">
+                                    <img src="{% static 'img/x-circle.svg' %}" alt="">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="count-element w-100 my-4">
+                    <div class="col-lg-4 col-md-6 col-12 d-flex justify-content-between pr-0 ml-auto">
+                        <div class="col-6">
+                            <p class="result-price">
+                                Итого:
+                            </p>
+                        </div>
+                        <div class="col-6">
+                            <p class="sf-medium result-price-usd">
+                                $ <span class="">{{ products_price }}</span>
+                            </p>
+                            <p class="sf-light result-price-converted">
+                                <span>{{ products_converted_price }}</span> сом
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-100 d-flex flex-wrap justify-content-between align-items-center mb-3">
+                    <a class="link d-md-block d-none" href="{% url 'catalog:index' %}">
+                        <img class="rotate180" src="{% static '/img/right-arr.svg' %}" alt="">
+                        Продолжить покупки
+                    </a>
+                    <a href="{% url 'checkout' %}"
+                       class="btn btn-primary checkout-btn waves-effect waves-light mr-0 d-flex align-items-center justify-content-center">
+                        ОФОРМИТЬ ЗАКАЗ
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 bb-grey">
+            </div>
+            <div class="col-lg-11 col-12 d-flex flex-wrap">
+                <div class="col-12 text-center my-5">
+                    <h3 class="sf-sem main-title">Рекомендуем</h3>
+                </div>
+                {% for recommended in recommended_products %}
+                    <div class="col-lg-4 col-sm-6 col-12 mt-lg-4 mt-2 recommend-card text-center">
+                        <img src="{{ recommended.get_image }}" class="card-img-top" alt="...">
+                        <div class="card-body bg-none text-center">
+                            <h5 class="card-title mt-2">{{ recommended.product_title }}</h5>
+                            <p class="card-price-usd my-2">${{ recommended.min_price }}</p>
+                            <p class="card-price-rub my-2">{{ recommended.calc_som_currency_min }} сом</p>
+                            <a class="link toBasket" data-id="{{ recommended.id }}">
+                                <img src="{% static '/img/bag.svg' %}" alt="">
+                                добавить в корзину
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        </section>
+    </div>
+{% endblock %}

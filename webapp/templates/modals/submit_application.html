@@ -1,0 +1,25 @@
+{% load static %}
+<div class="modal fade" id="callBack" tabindex="-1" role="dialog" aria-labelledby="callBack" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body d-flex flex-wrap justify-content-center">
+                <div class="w-100">
+                    <button type="button" class="close ml-auto" data-dismiss="modal" aria-label="Close">
+                        <img src="{% static 'img/close.svg' %}" alt="">
+                    </button>
+                </div>
+                <div class="w-100 text-center">
+                    <h5 class="modal-title sf-medium">Оставить заявку</h5>
+                    <p class="modal-desc sf-reg px-5">С вами свяжется наш менеджер в течении пяти минут для уточнения деталей</p>
+                </div>
+                <div class="col-10 mt-4">
+                    <input type="text" class="form-control callBackClientName" placeholder="Ваше имя*" value="{{ user.name|default:'' }}" required>
+                    <input type="text" class="form-control callBackClientPhone mt-2" placeholder="Укажите свой номер*" value="{{ user.phone }}" required>
+                    <button type="submit" class="btn btn-primary submitApplication  w-100 waves-effect waves-light my-4">
+                        Отправить
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

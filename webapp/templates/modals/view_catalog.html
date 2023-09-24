@@ -1,0 +1,85 @@
+{% load static %}
+<div class="modal fade" id="viewCatalog" tabindex="-1" role="dialog" aria-labelledby="callBack" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="w-100">
+                    <button type="button" class="close ml-auto" data-dismiss="modal" aria-label="Close">
+                        <img src="{% static 'img/x-21.svg' %}" alt="">
+                    </button>
+                </div>
+                <div class="w-100 text-center mt-5">
+                    <h5 class="modal-title sf-medium">Выберите нужную категорию</h5>
+                    <div class="d-flex flex-wrap justify-content-center mt-3">
+                        <a class="col-6 pr-1 d-flex flex-column justify-content-end {% if request.path == '/catalog/iphone' %}active{% endif %}" href="{% url 'catalog:products' 'iphone' %}">
+                            <div class="category-content">
+                                <img src="{% static '/img/iphone.svg' %}" alt="">
+                                <p class=" sf-reg" >iPhone</p>
+                            </div>
+                        </a>
+                        <a class="col-6 pl-1 d-flex flex-column justify-content-end {% if  request.path == '/catalog/macBook' %}active{% endif %}" href="{% url 'catalog:products' 'macBook' %}">
+                            <div class="category-content">
+                                <img src="{% static '/img/macbook.svg' %}" alt="">
+                                <p class=" sf-reg" >Mac</p>
+                            </div>
+                        </a>
+                        <a class="col-6 pr-1 d-flex flex-column justify-content-end {% if  request.path == '/catalog/iPad' %}active{% endif %}" href="{% url 'catalog:products' 'iPad' %}">
+                            <div class="category-content">
+                                <img src="{% static '/img/ipad.svg' %}" alt="">
+                                <p class=" sf-reg" >iPad</p>
+                            </div>
+                        </a>
+                        <a class="col-6 pl-1 d-flex flex-column justify-content-end {% if request.path == '/catalog/iMac' %}active{% endif %}" href="{% url 'catalog:products' 'iMac' %}">
+                            <div class="category-content">
+                                <img src="{% static '/img/iMac.svg' %}" alt="">
+                                <p class=" sf-reg" >iMac</p>
+                            </div>
+                        </a>
+                        <a class="col-6 pr-1 d-flex flex-column justify-content-end {% if request.path == '/catalog/apple-watch' %}active{% endif %}" href="{% url 'catalog:products' 'apple-watch' %}">
+                           <div class="category-content">
+                            <img src="{% static '/img/watch.svg' %}" alt="">
+                            <p class=" sf-reg" >Apple Watch</p>
+                           </div>
+                        </a>
+                        <a class="col-6 pl-1 d-flex flex-column justify-content-end {% if request.path == '/catalog/gadgets' %}active{% endif %}" href="{% url 'catalog:products' 'gadgets' %}">
+                             <div class="category-content">
+                                <img src="{% static '/img/apple_tv.svg' %}" alt="">
+                                <p class=" sf-reg" >Гаджеты</p>
+                             </div>
+                        </a>
+                        <a class="col-6 pr-1 d-flex flex-column justify-content-end {% if request.path == '/catalog/accessory'  %}active{% endif %}" href="{% url 'catalog:products' 'accessory' %}">
+                            <div class="category-content">
+                                <img src="{% static '/img/accessory.svg' %}" alt="">
+                                <p class=" sf-reg">Аксессуары</p>
+                            </div>
+                        </a>
+                        <a class="col-6 pl-1 d-flex flex-column justify-content-end {% if request.path == '/catalog/airpods'  %}active{% endif %}" href="{% url 'catalog:products' 'airpods' %}">
+                            <div class="category-content">
+                                <img src="{% static '/img/airpods.svg' %}" alt="">
+                                <p class=" sf-reg">AirPods</p>
+                            </div>
+                        </a>
+                        {% url 'compare' as url %}
+                        <a class="col-6 pr-1 d-flex flex-column justify-content-end {% if request.path == url %}active{% endif %}" href="{% url 'compare' %}">
+                            <div class="category-content">
+                                <img src="{% static '/img/comparison.svg' %}" alt="">
+                                <p class=" sf-reg">Сравнение</p>
+                            </div>
+                        </a>
+
+                        <a class="col-12 d-flex flex-column justify-content-end {% if category == 'tradeIn' %}active{% endif %}" href="{% url 'catalog:products' 'tradeIn' %}">
+                            <div class="category-content trade-in">
+                                {% if category == 'tradeIn' %}
+                                    <img class="lazyload" data-src="{% static '/img/trade-in-white.svg' %}" alt="">
+                                {% else %}
+                                    <img class="lazyload" data-src="{% static '/img/trade-in.svg' %}" alt="">
+                                {% endif %}
+                                <p class=" sf-reg">Trade In</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

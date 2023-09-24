@@ -1,0 +1,276 @@
+{% extends 'base.html' %}
+{% load filter_by_category %}
+{% block content %}
+{% load static %}
+<div class="wrapper">
+    <section class="main-first-section position-relative overflow-hidden">
+        <div class="main-slider-container">
+            {% for slider in main_page_slider %}
+                <div class="slider"  style="background-color:{{ slider.background }}">
+                    <a href="{{slider.link}}" class="w-100 h-100">
+                        <img class="{% if slider.mobile_image %} hide-in-mobile {% endif %}"  width="100%" height="auto" src="/media/{{slider.desktop_image}}" alt="">
+                        {% if slider.mobile_image %}
+                            <img class="hide-in-desktop" src="/media/{{slider.mobile_image}}" alt="">
+                        {% endif %}
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+    <section class="main-third-section mt-2">
+        <div class="h-100 max-14 d-flex flex-wrap px-2">
+            {% for product in main_page.page_product.all %}
+            <div class="col-lg-4 col-12 px-1 pt-4">
+                <div class="px-3 py-4 d-flex justify-content-center h-100 position-relative apple-card">
+                    <div class="col-5 pl-0 pr-1 d-flex flex-wrap align-items-between">
+                        <div class="w-100">
+                            <p class="sf-medium">{{product.product_title}}</p>
+                            <p class="sf-light grey-color mt-1">{{product.product_desc}}</p>
+                        </div>
+                        <div class="w-100 d-flex justify-content-end flex-column">
+                            <p class="sf-medium">{{product.product.calc_som_currency_min}} сом</p>
+                            <p class="sf-light grey-color">от  ${{product.product.min_price }}</p>
+                        </div>
+                    </div>
+                    <div class="col-7 px-1 d-flex align-items-between justify-content-end flex-wrap apple-card">
+                        <div class="w-100 d-flex justify-content-end">
+                            <img class="product-img lazyload" width="240px" height="150px" data-src="/media/{{ product.product_img }}" alt="">
+                        </div>
+                        <a class="ml-3 link d-flex align-items-end c-point" href="{% url 'catalog:product' product.product.id %}">
+                            выбрать
+                            <img class="lazyload" width="11px" height="14px" data-src="{% static '/img/right-arr.svg' %}" alt="">
+                        </a>
+                    </div>
+                    <a class="ml-2 link-to-product" href="{% url 'catalog:product' product.product.id %}">
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    <section class="main-second-section mt-4 position-relative overflow-hidden">
+        <div class="main-slider-container sales">
+            {% for slider in sales_slider %}
+                <div class="slider"  style="background-color:{{ slider.background }}">
+                    <a href="{{slider.link}}" class="w-100 h-100">
+                        <img class="hide-in-mobile lazyload" data-src="/media/{{slider.desktop_image}}" alt="">
+                        <img class="hide-in-desktop lazyload" data-src="/media/{{slider.mobile_image}}" alt="">
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+    <section class="main-fourth-section mt-4  bg-lg-img bg-img-md-none"
+             style="background-image:url('/media/{{ main_page.second_product_img}}')">
+        <div class="h-100 py-4">
+            <div class="col-12 d-flex align-items-center h-100 flex-column mt-4">
+                <p class="sf-sem main-title li-dark text-center" data-aos-easing="ease-in-back" data-aos-delay="10"
+                   data-aos-offset="0">{{ main_page.second_product_title }}</p>
+                <p class="sf-light main-little-description text-center mt-2" data-aos-easing="ease-in-back"
+                   data-aos-delay="10"
+                   data-aos-offset="0">{{ main_page.second_product_desc }}</p>
+                {% if main_page.second_product %}
+                    <div class="d-flex mt-2">
+                        <a class="ml-2 link" href="{% url 'catalog:product' main_page.second_product.id %}"
+                           data-aos-easing="ease-in-back" data-aos-delay="10"
+                           data-aos-offset="0">
+                            подробнее
+                            <img class="lazyload" data-src="{% static '/img/right-arr.svg' %}" alt="">
+                        </a>
+                        <a class="ml-3 link" href="{% url 'catalog:product' main_page.second_product.id %}"
+                           data-aos-easing="ease-in-back" data-aos-delay="10"
+                           data-aos-offset="0">
+                            выбрать
+                            <img width="11px" height="14px" class="lazyload" data-src="{% static '/img/right-arr.svg' %}" alt="">
+                        </a>
+                    </div>
+                {% endif %}
+
+                <div class="d-lg-none d-block mt-4">
+                    <img class="mob-img lazyload" data-src="/media/{{main_page.second_product_img_mobile }}" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="main-fifth-section mt-4">
+        <div class="h-100 container py-4">
+            <div class="col-12 d-flex align-items-center h-100 flex-column mt-4">
+                <p class="sf-sem main-title li-dark text-center" data-aos-easing="ease-in-back" data-aos-delay="10"
+                   data-aos-offset="0">{{ main_page.fifth_block_title }}</p>
+                <p class="sf-light main-little-description text-center mt-2" data-aos-easing="ease-in-back"
+                   data-aos-delay="10" data-aos-offset="0">{{ main_page.fifth_block_desc }}</p>
+                <div class="d-flex mt-2">
+                    <a class=" ml-2 link" href="{{main_page.fifth_block_link}}" data-aos-easing="ease-in-back"
+                       data-aos-delay="10" data-aos-offset="0">
+                        больше моделей
+                        <img class="lazyload" data-src="{% static '/img/right-arr.svg' %}" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 d-flex flex-wrap mt-4">
+                {% for product in products|product_by_category:main_page.fifth_block_category|get_specific_elements:8 %}
+                <div class="col-lg-3 col-md-6 col-12 mt-lg-0 mt-2 phone-card" data-aos-easing="ease-in-back"
+                     data-aos-delay="10" data-aos-offset="0">
+                    <div class="card-body d-flex flex-wrap align-content-between mt-3 position-relative">
+                        <div class="overflow main-third-section mt-4-hidden">
+                            <h5 class="card-title of-ellipsis">{{ product.product_title }}</h5>
+                            <a class="link toBasket" href="{% url 'catalog:product' product.get_url_name %}">
+                                выбрать
+                                <img class="lazyload" width="11px" height="14px" data-src="{% static '/img/right-arr.svg' %}" alt="">
+                            </a>
+                        </div>
+                        <div class="w-100 text-center pt-2 pb-4">
+                            <img class="card-image lazyload" width="187px" height="221px" data-src="{{ product.get_image }}" alt="">
+                        </div>
+                        <div class="w-100 d-flex justify-content-end flex-column mt-auto">
+                            <p class="sf-medium">{{ product.calc_som_currency_min }} сом</p>
+                            <p class="sf-light grey-color">от ${{ product.min_price }}</p>
+                        </div>
+                        <a class="ml-2 link-to-product" href="{% url 'catalog:product' product.get_url_name %}">
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% if products|product_by_category:'gadgets'|length %}
+    <section class="main-sixth-section mt-4">
+        <div class="h-100 container py-4">
+            <div class="col-12 d-flex align-items-center h-100 flex-column mt-4">
+                <p class="sf-sem main-title li-dark text-center" data-aos-easing="ease-in-back" data-aos-delay="10"
+                   data-aos-offset="0">{{ main_page.sixth_block_title }}</p>
+                <p class="sf-light main-little-description text-center mt-2" data-aos-easing="ease-in-back" data-aos-delay="10"
+                   data-aos-offset="0">{{ main_page.sixth_block_desc }}</p>
+                <div class="d-flex mt-2">
+                    <a class=" ml-2 link" href="{{main_page.sixth_block_link}}" data-aos-easing="ease-in-back"
+                       data-aos-delay="10" data-aos-offset="0">
+                        все гаджеты
+                        <img class="lazyload" data-src="{% static '/img/right-arr.svg' %}" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 d-flex flex-wrap mt-4">
+                {% for product in products|product_by_category:main_page.sixth_block_category|get_specific_elements:3 %}
+                <div class="col-lg-4 col-md-6 col-12 mt-lg-0 mt-2 phone-card" data-aos-easing="ease-in-back"
+                     data-aos-delay="10" data-aos-offset="0">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                        <h5 class="card-title">{{ product.product_title }}</h5>
+                        <div class="w-100 text-center pt-2 pb-4">
+                            <img class="card-image lazyload" width="187px" height="187px" data-src="{{ product.get_image }}" alt="">
+                        </div>
+                        <div class="w-100 d-flex justify-content-end">
+                            <a class="link" href="{% url 'catalog:product' product.get_url_name %}">
+                                выбрать
+                                <img class="lazyload" width="11px" height="14px" data-src="{% static '/img/right-arr.svg' %}" alt="">
+                            </a>
+                        </div>
+                        <a class="ml-2 link-to-product" href="{% url 'catalog:product' product.get_url_name %}">
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    <section class="main-seven-section mt-4">
+        <div class="h-100 py-4">
+            <div class="container d-flex align-items-center h-100 flex-column mt-4">
+                <p class="sf-sem main-title li-dark text-center" data-aos-easing="ease-in-back" data-aos-delay="10"
+                   data-aos-offset="0" style="line-height: 100%;">{{ main_page.seventh_block_title }}</p>
+                <p class="sf-light main-little-description text-center mt-2" data-aos-easing="ease-in-back" data-aos-delay="10"
+                   data-aos-offset="0">{{ main_page.seventh_block_desc }}</p>
+                <div class="d-flex mt-2">
+                    <a class=" ml-2 link" href="{{main_page.seventh_block_link}}" data-aos-easing="ease-in-back"
+                       data-aos-delay="10" data-aos-offset="0">
+                        подробнее
+                        <img class="lazyload" data-src="{% static '/img/right-arr.svg' %}" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 mt-4 position-relative" style="background:#000;">
+                <div class="container">
+                    <video id="vid" style="max-width:100%;" muted playsinline >
+                        <source src="{{ main_page.seventh_block_img.url }}" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+            <div class="d-flex flex-wrap" style="margin-top: 110px">
+                <div class="col-lg-6 col-12 mt-lg-0 mt-2 phone-card services" data-aos-easing="ease-in-back"
+                     data-aos-delay="10" data-aos-offset="0">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ main_page.first_service_title }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            {{ main_page.first_service_desc }}
+                        </h6>
+                        <a class="link" href="{{main_page.first_service_link}}">
+                            перейти
+                            <img class="lazyload" data-src="{% static '/img/right-arr.svg' %}" alt="">
+                        </a>
+                        <div class="mt-4 text-right overflow-hidden">
+                            <img class="max-width-100 lazyload" data-src="/media/{{ main_page.first_service_img }}" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-12 mt-lg-0 mt-2 phone-card services" data-aos-easing="ease-in-back"
+                     data-aos-delay="10" data-aos-offset="0">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ main_page.second_service_title }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            {{ main_page.second_service_desc }}
+                        </h6>
+                        <a class="link" href="{{main_page.second_service_link}}">
+                            перейти
+                            <img class="lazyload" data-src="{% static '/img/right-arr.svg' %}" alt="">
+                        </a>
+                        <div class="mt-4 text-right  overflow-hidden">
+                            <img class="max-width-100 lazyload" data-src="/media/{{ main_page.second_service_img }}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="main-eight-section mt-4">
+        <div class="h-100 container py-4">
+            <div class="col-12 d-flex align-items-center h-100 flex-column mt-4">
+                <p class="sf-sem main-title li-dark text-center" data-aos-easing="ease-in-back" data-aos-delay="10"
+                   data-aos-offset="0">{{ main_page.news_title }}</p>
+                <p class="sf-light main-little-description text-center mt-2" data-aos-easing="ease-in-back" data-aos-delay="10"
+                   data-aos-offset="0">{{ main_page.news_desc }}</p>
+                <div class="d-flex mt-2">
+                    <a class=" ml-2 link" href="{% url 'articles' %}" data-aos-easing="ease-in-back" data-aos-delay="10"
+                       data-aos-offset="0">
+                        подробнее
+                        <img class="lazyload" data-src="{% static '/img/right-arr.svg' %}" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="d-flex flex-wrap mt-5" data-aos-easing="ease-in-back" data-aos-delay="10" data-aos-offset="0">
+                {% for article in articles|get_specific_elements:3 %}
+                    <div class="col-lg-4 col-md-6 col-12 mt-lg-0 mt-2 news-card">
+                            <div class="col-12 px-0  d-flex justify-content-center">
+                                <a class="w-100" href="{% url 'article' article.id %}">
+                                    <img class="lazyload w-100" data-src="{{ article.get_image|default:'/static/img/default-article.svg' }}"
+                                     class="card-img-top" alt="..." width="370px" height="190px" style="height: auto;">
+                                </a>
+                            </div>
+                            <div class="card-body bg-none">
+                                <p class="card-date">{{ article.pub_date|date:"d.m.y" }}</p>
+                                <h5 class="card-title mt-2 of-ellipsis">{{ article.title }}</h5>
+                                <p class="card-text mb-2 of-3-ellipsis">
+                                    {{ article.secondary_title }}
+                                </p>
+                                <a class="link" href="{% url 'article' article.id %}">
+                                    подробнее
+                                    <img class="lazyload" data-src="{% static '/img/right-arr.svg' %}" alt="">
+                                </a>
+                            </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

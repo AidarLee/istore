@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+      <li><a href="{% url 'home' %}"><img src="{% static 'img/home.svg' %}" alt=""></a></li>
+      <li><img src="{% static 'img/left-bread.svg' %}" alt=""></li>
+      <li class="active">Блог</li>
+    </ul>
+{% endblock breadcrumb %}
+{% block content %}
+    <div class="wrapper">
+        <section class="news-first">
+            <div class="h-100 container d-flex flex-wrap">
+                <div class="text-center w-100 mt-5">
+                    <h3 class="sf-sem main-title">Блог</h3>
+                    <h4 class="sf-light main-little-description">
+                        Свежие новости интересные статьи об apple
+                    </h4>
+                </div>
+            </div>
+        </section>
+        <section class="news-second mb-4">
+            <div class="h-100 container py-4 d-flex flex-wrap mt-3">
+                {% for article in articles %}
+                    <div class="col-lg-6 col-12 mt-3 news-card">
+                        <div class="w-100 px-0 d-flex justify-content-center">
+                            <a class="link" href="{% url 'article' article.id %}">
+                                <img src="{{ article.get_image|default:'/static/img/default-article.svg'}}"
+                                 class="card-img-top" alt="...">
+                            </a>
+                        </div>
+                        <div class="card-body bg-none">
+                            <h5 class="card-title mt-2 of-ellipsis">
+                                {{ article.title }}
+                            </h5>
+                            <p class="card-date my-2">{{ article.pub_date|date:"F d, Y" }}</p>
+                            <p class="card-text mb-2 of-3-ellipsis"> {{ article.secondary_title }}</p>
+                            <a class="link" href="{% url 'article' article.id %}">
+                                подробнее
+                                <img src="{% static '/img/right-arr.svg' %}" alt="">
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+{% endblock %}
