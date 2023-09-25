@@ -2,7 +2,7 @@ from easy_select2 import select2_modelform, select2_modelform_meta, apply_select
 from django.contrib.admin import SimpleListFilter
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-
+from nested_admin import NestedTabularInline
 from .models import *
 from django.utils.translation import gettext_lazy as _
 from django import forms
@@ -60,13 +60,13 @@ class ProductSpecificationAdmin(nested_admin.NestedStackedInline):
         return Capacity.objects.all()
 
 
-class AdditionalSpecificationAdmin(admin.TabularInline):
+class AdditionalSpecificationAdmin(NestedTabularInline):
     model = AdditionalSpecification
     extra = 0
 
 
 RecommendedAdminForm = select2_modelform(Recommended, attrs={'width': '250px'})
-class RecommendedAdmin(admin.TabularInline):
+class RecommendedAdmin(NestedTabularInline):
     form = RecommendedAdminForm
     model = Recommended
     extra = 1
@@ -117,12 +117,12 @@ class PatternAdmin(admin.ModelAdmin):
     model = Pattern
 
 
-class MainSpecificationAdmin(admin.TabularInline):
+class MainSpecificationAdmin(NestedTabularInline):
     model = MainSpecification
     extra = 1
 
 
-class ModuleAdmin(admin.TabularInline):
+class ModuleAdmin(NestedTabularInline):
     model = Module
     extra = 0
 

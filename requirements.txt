@@ -36,7 +36,6 @@ protobuf==4.24.3
 pyasn1==0.5.0
 pyasn1-modules==0.3.0
 pycparser==2.21
-pycurl @ file:///C:/Users/Aigap/Downloads/pycurl-7.43.0.5-cp38-cp38-win_amd64.whl#sha256=1957c867e2a341f5526c107c7bbc5014d6e75fdc2a14294fcb8a47663fbd2e15
 pyfacebook==0.3
 pyparsing==3.1.1
 python-facebook-api==0.17.1
