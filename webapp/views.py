@@ -40,18 +40,31 @@ categories = {'iphone': 'iPhone ', 'macBook': 'MacBook', 'iPad': 'iPad', 'iMac':
 send_message_to_mail = "info@istore.kg"
 # send_message_to_mail = "kaarov8@gmail.com"
 send_message_from_mail = "testingfor9999@gmail.com"
+
 def main(request):
     articles = Article.objects.filter(active=True)
     products = Product.objects.filter(in_trade=False, active=True).order_by(
         F('order').desc(nulls_last=True))
-    main_page = MainPage.objects.latest(F('order').desc(nulls_last=True))
+    
+    try:
+        main_page = MainPage.objects.latest(F('order').desc(nulls_last=True))
+    except MainPage.DoesNotExist:
+        main_page = None
+
     main_page_slider = MainPageSlider.objects.filter(
         category=1).order_by(F('order').desc(nulls_last=True))
     sales_slider = MainPageSlider.objects.filter(
         category=2).order_by(F('order').desc(nulls_last=True))
 
-    return render(request, 'index.html', {'articles': articles, 'products': products, 'main_page': main_page
-                                          , 'main_page_slider': main_page_slider, 'sales_slider': sales_slider})
+    if main_page is not None:
+        fifth_block_category = main_page.fifth_block_category
+    else:
+        fifth_block_category = None
+
+    return render(request, 'index.html', {'articles': articles, 'products': products, 'main_page': main_page,
+                                          'main_page_slider': main_page_slider, 'sales_slider': sales_slider,
+                                          'fifth_block_category': fifth_block_category})
+
 
 
 def about_us(request):

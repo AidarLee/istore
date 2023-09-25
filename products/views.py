@@ -12,6 +12,7 @@ import json
 categories = {'iphone': 'iPhone ', 'macBook': 'MacBook', 'iPad': 'iPad', 'iMac': 'iMac',
               'apple-watch': 'Apple Watch', 'gadgets': 'Гаджеты', 'accessory': 'Аксессуары', 'airpods': 'AirPods',
               'tradeIn': 'Trade In', 'another': 'Разное'}
+
 additional_categories = {'apple-tv': 'Apple TV ', 'cables': 'Кабели', 'adapters': 'Переходники',
                          'protective-glass': 'Защитные стекла', 'stylus': 'Стилусы',
                          'keyboards-and-mouse': 'Клавиатуры и мышки', 'charging-device': 'Зарядные устройства',

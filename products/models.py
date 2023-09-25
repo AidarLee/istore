@@ -11,6 +11,7 @@ import webapp.models as webapp
 from django.core.validators import FileExtensionValidator
 
 capacity_name = [('mb', 'MB'), ('gb', 'GB'), ('tb', 'TB')]
+
 categories = [('iphone', 'iPhone '), ('macBook', 'MacBook '), ('iPad', 'iPad'), ('iMac', 'iMac'),
               ('apple-watch', 'Apple Watch'), ('gadgets', 'Гаджеты'), ('airpods', 'AirPods'),
               ('accessory', 'Аксеcсуары'), ('another', 'Разное')]

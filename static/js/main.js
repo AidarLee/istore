@@ -891,13 +891,13 @@ $(function () {
 });
 $('#vid').on('ended', function(){
     this.playedThrough = true;
-
 });
+
 let video = $('#vid');
 if(video.length){
     $(window).scroll(function(){
     var myVideo = document.getElementById("vid");
-    if($(window).scrollTop() > 3600){
+    if($(window).scrollTop() > 2100){
        if(!myVideo.playedThrough)
           myVideo.play();
     }
