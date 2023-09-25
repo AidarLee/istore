@@ -1,3 +1,4 @@
+
 var token = $('input[name="token"]').val();
 if (typeof axios !== 'undefined'){
     axios.defaults.xsrfCookieName = 'csrftoken'
@@ -897,7 +898,7 @@ let video = $('#vid');
 if(video.length){
     $(window).scroll(function(){
     var myVideo = document.getElementById("vid");
-    if($(window).scrollTop() > 3600){
+    if($(window).scrollTop() > 2050){
        if(!myVideo.playedThrough)
           myVideo.play();
     }
