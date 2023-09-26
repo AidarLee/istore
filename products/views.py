@@ -9,7 +9,7 @@ import requests
 import os
 import json
 
-categories = {'iphone': 'iPhone ', 'macBook': 'MacBook', 'iPad': 'iPad', 'iMac': 'iMac',
+categories = {'iphone': 'iPhone', 'macBook': 'MacBook', 'iPad': 'iPad', 'iMac': 'iMac',
               'apple-watch': 'Apple Watch', 'gadgets': 'Гаджеты', 'accessory': 'Аксессуары', 'airpods': 'AirPods',
               'tradeIn': 'Trade In', 'another': 'Разное'}
 
@@ -24,7 +24,9 @@ additional_categories = {'apple-tv': 'Apple TV ', 'cables': 'Кабели', 'ada
                          'accessory_2': 'Доп Аксессуары 2', 'accessory_3': 'Доп Аксессуары 3', 'accessory_4': 'Доп Аксессуары 4', 'accessory_5': 'Доп Аксессуары 5',
                          'gadget_1': 'Доп Гаджеты 1', 'gadget_2': 'Доп Гаджеты 2', 'gadget_3': 'Доп Гаджеты 3', 'gadget_4': 'Доп Гаджеты 4', 'gadget_5': 'Доп Гаджеты 5'}
 
+
 def index(request):
+
     return render(request, 'catalog.html')
 
 
@@ -149,9 +151,10 @@ def products(request, category):
 
             if tradeIn:
                 tradeIn = tradeIn[0]
+    print(f"Categories: {categories}")
     return render(request, 'products.html',
                   {'products': products, 'category': category, 'category_name': categories[category],
-                   'tradeIn': tradeIn, 'tradeInLink': tradeInLink})
+                   'tradeIn': tradeIn, 'tradeInLink': tradeInLink, 'category_images':category})
 
 
 def accessory(request, category):

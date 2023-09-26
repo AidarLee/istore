@@ -7,28 +7,9 @@ from .models import *
 from django.utils.translation import gettext_lazy as _
 from django import forms
 import nested_admin
-from .fields import MultipleFilesField
-from .widgets import ClearableMultipleFilesInput
-
-class MultipleFileInput(forms.ClearableFileInput):
-    allow_multiple_selected = True
-
-
-class MultipleFileField(forms.FileField):
-    def __init__(self, *args, **kwargs):
-        kwargs.setdefault("widget", MultipleFileInput())
-        super().__init__(*args, **kwargs)
-
-    def clean(self, data, initial=None):
-        single_file_clean = super().clean
-        if isinstance(data, (list, tuple)):
-            result = [single_file_clean(d, initial) for d in data]
-        else:
-            result = single_file_clean(data, initial)
-        return result
 
 class ImagesFieldForm(forms.Form):
-    images = MultipleFileInput()
+    images = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
 def make_formalized(Order, request, queryset):
     for query in queryset:
         if (query.formalized):

@@ -46,10 +46,8 @@ def main(request):
     products = Product.objects.filter(in_trade=False, active=True).order_by(
         F('order').desc(nulls_last=True))
     
-    try:
-        main_page = MainPage.objects.latest(F('order').desc(nulls_last=True))
-    except MainPage.DoesNotExist:
-        main_page = None
+    main_page = MainPage.objects.latest(F('order').desc(nulls_last=True))
+    
 
     main_page_slider = MainPageSlider.objects.filter(
         category=1).order_by(F('order').desc(nulls_last=True))

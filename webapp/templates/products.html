@@ -11,7 +11,7 @@
         <li><a href="{{ additional.link }}">{{additional.name}}</a></li>
     {% endif %}
     <li><img src="{% static 'img/left-bread.svg' %}" alt=""></li>
-    <li class="active">{{category_name|get_category_name:category_images}}</li>
+    <li class="active">{{category_name}}</li>
 </ul>
 {% endblock breadcrumb %}
 {% block content %}
@@ -107,7 +107,7 @@
                 <div class="text-left col-12 pt-0 d-flex flex-wrap justify-content-between pl-0">
                     <div class="d-flex flex-wrap justify-content-between w-100">
                         <h4 class="sf-medium in-catalog-title">
-                            {{category_name|get_category_name:category_images}}
+                            {{category_name}}
                         </h4>
                         {% if additional and additional.name == "Trade In" %}
                             <a class="tradeInLink" href="{% url 'catalog:products' 'tradeIn' %}">
